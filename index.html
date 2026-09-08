@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KOEMO（コエモ）｜プロービング検査を、声で記録する</title>
+<meta name="description" content="KOEMOは、歯周ポケット検査（プロービング検査）を音声で記録できる歯科医院向けクラウドサービスです。手を止めず、目を離さず、検査結果が残ります。">
+<style>
+:root{
+  --purple:#7F77DD; --purple-d:#534AB7; --purple-dd:#3E3690;
+  --lav:#EFEDFB; --lav2:#F7F6FC; --lav3:#FBFAFE;
+  --text:#23232A; --muted:#6B6B7B; --hint:#9A9AAB;
+  --border:#E7E5F2; --border2:#D6D2EA;
+  --amber:#F4B400; --amber-d:#B98400;
+  --radius:16px; --maxw:1120px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--text);background:#fff;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",system-ui,sans-serif;font-size:15px;line-height:1.8;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:var(--purple-d);text-decoration:none}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+/* ---------- ヘッダー ---------- */
+header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.hbar{max-width:var(--maxw);margin:0 auto;padding:12px 22px;display:flex;align-items:center;gap:22px}
+.logo{display:flex;align-items:baseline;gap:2px;font-weight:800;font-size:23px;letter-spacing:.02em;color:var(--purple-d);flex:none}
+.logo .dot{color:var(--purple);font-size:26px;line-height:0}
+.logo small{font-size:10px;font-weight:600;color:var(--hint);margin-left:5px;letter-spacing:.14em}
+nav.gnav{display:flex;gap:18px;font-size:13.5px;margin-left:6px}
+nav.gnav a{color:var(--text);white-space:nowrap;padding:4px 0;border-bottom:2px solid transparent}
+nav.gnav a:hover{color:var(--purple-d);border-bottom-color:var(--purple)}
+.hcta{margin-left:auto;display:flex;gap:9px;align-items:center;flex:none}
+.btn{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;padding:10px 20px;border-radius:999px;border:1.5px solid var(--border2);background:#fff;color:var(--purple-d);cursor:pointer;white-space:nowrap;transition:.15s}
+.btn:hover{background:var(--lav2)}
+.btn.primary{background:var(--purple);border-color:var(--purple);color:#fff}
+.btn.primary:hover{background:var(--purple-d);border-color:var(--purple-d)}
+.btn.line{background:#06C755;border-color:#06C755;color:#fff}
+.btn.lg{font-size:15px;padding:15px 32px}
+.burger{display:none;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:8px}
+.burger span{width:22px;height:2px;background:var(--purple-d);display:block;border-radius:2px}
+
+/* ---------- 共通パーツ ---------- */
+section{padding:76px 0}
+section.alt{background:var(--lav3)}
+.sechead{margin-bottom:36px}
+.sechead .en{display:block;font-size:11.5px;font-weight:800;letter-spacing:.2em;color:var(--purple);margin-bottom:7px}
+.sechead h2{font-size:29px;font-weight:800;margin:0;letter-spacing:.01em;line-height:1.4}
+.sechead p{color:var(--muted);margin:12px 0 0;font-size:14.5px;max-width:46em}
+.sechead.center{text-align:center}.sechead.center p{margin-left:auto;margin-right:auto}
+.chip{font-size:11.5px;background:var(--lav);color:var(--purple-d);border-radius:999px;padding:5px 12px;font-weight:600;display:inline-block}
+.pill-now{display:inline-flex;align-items:center;gap:7px;background:var(--purple-d);color:#fff;font-size:11.5px;font-weight:800;letter-spacing:.06em;padding:6px 14px;border-radius:999px}
+.pill-now i{width:7px;height:7px;border-radius:50%;background:#9EF0C2;display:inline-block;box-shadow:0 0 0 3px rgba(158,240,194,.3)}
+.pill-soon{display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--amber-d);border:1.5px solid #F1D98A;font-size:11px;font-weight:800;letter-spacing:.08em;padding:4px 12px;border-radius:999px}
+
+/* 実画面フレーム（iPad） */
+.ipad{background:#1B1C22;border-radius:22px;padding:12px;box-shadow:0 24px 64px rgba(58,50,120,.22)}
+.ipad img{border-radius:12px;width:100%;aspect-ratio:4/3;object-fit:cover}
+.ipad.sm{border-radius:16px;padding:8px}.ipad.sm img{border-radius:9px}
+.cap{font-size:12px;color:var(--hint);text-align:center;margin-top:12px}
+/* 実画面（スマホ） */
+.phone-shot{width:236px;aspect-ratio:10/19;border-radius:28px;overflow:hidden;margin:0 auto;box-shadow:0 22px 50px rgba(58,50,120,.22)}
+.phone-shot img{width:100%;height:100%;object-fit:cover;object-position:center}
+/* 写真プレースホルダ */
+.photo{position:relative;border-radius:var(--radius);overflow:hidden;background:linear-gradient(145deg,#E6E3F6 0%,#D8D3F0 55%,#CFC8EC 100%);display:flex;align-items:center;justify-content:center;color:var(--purple-dd);text-align:center;padding:24px}
+.photo::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(255,255,255,.45),transparent 55%)}
+.photo .ph-in{position:relative;z-index:1;max-width:22em}
+.photo .ph-tag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.18em;background:rgba(255,255,255,.75);color:var(--purple-d);padding:4px 11px;border-radius:999px;margin-bottom:10px}
+.photo .ph-desc{font-size:12.5px;line-height:1.75;font-weight:600;opacity:.85}
+.photo.r43{aspect-ratio:4/3}.photo.r169{aspect-ratio:16/9}.photo.r11{aspect-ratio:1}.photo.r32{aspect-ratio:3/2}
+
+/* ---------- ヒーロー ---------- */
+.hero{background:linear-gradient(170deg,var(--lav2) 0%,var(--lav) 60%,#E9E6F8 100%);padding:60px 0 78px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-160px;top:-160px;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(127,119,221,.16),transparent 70%)}
+.hero-in{display:grid;grid-template-columns:.95fr 1.05fr;gap:46px;align-items:center;position:relative;z-index:1}
+h1.hero-t{font-size:42px;line-height:1.32;font-weight:800;letter-spacing:.01em;margin:22px 0 18px}
+h1.hero-t .hl{color:var(--purple-d);position:relative;white-space:nowrap}
+h1.hero-t .hl::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:9px;background:rgba(127,119,221,.22);z-index:-1;border-radius:3px}
+.hero p.lead{font-size:15.5px;color:var(--muted);line-height:1.95;margin:0 0 26px;max-width:30em}
+.hero-btns{display:flex;gap:11px;flex-wrap:wrap;margin-bottom:20px}
+.hero-note{font-size:12px;color:var(--hint);display:flex;gap:16px;flex-wrap:wrap}
+
+/* ---------- 課題 ---------- */
+.problem{display:grid;grid-template-columns:1fr 1.15fr;gap:44px;align-items:center}
+.plist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.plist li{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px 18px 16px 52px;position:relative;font-size:14.5px;line-height:1.7}
+.plist li::before{content:"";position:absolute;left:18px;top:19px;width:20px;height:20px;border-radius:50%;background:var(--lav);border:2px solid var(--purple)}
+.plist li::after{content:"";position:absolute;left:24px;top:24px;width:8px;height:8px;border-radius:50%;background:var(--purple)}
+.plist li b{display:block;font-size:15px;margin-bottom:2px}
+.plist li span{color:var(--muted);font-size:13px}
+.answer{margin-top:22px;padding:18px 22px;background:var(--purple-d);color:#fff;border-radius:14px;font-size:15px;font-weight:700;line-height:1.7}
+.answer small{display:block;font-weight:500;font-size:12.5px;opacity:.85;margin-top:4px}
+
+/* ---------- プロービング 深掘り ---------- */
+.bigshot{margin:0 auto 18px;max-width:960px}
+.steps4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:40px}
+.st{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:22px 20px;position:relative}
+.st .n{width:32px;height:32px;border-radius:50%;background:var(--purple);color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.st h4{margin:0 0 7px;font-size:15.5px;font-weight:700}
+.st p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.8}
+.st .arrow{position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--border2);font-size:20px;z-index:1}
+.st:last-child .arrow{display:none}
+/* 音声入力の例 */
+.voicebox{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:center}
+.talk{display:flex;flex-direction:column;gap:12px}
+.turn{display:flex;gap:12px;align-items:flex-start}
+.turn .who{width:38px;height:38px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800}
+.turn.dh .who{background:var(--lav);color:var(--purple-d)}
+.turn.ai .who{background:var(--purple);color:#fff}
+.turn .bub{background:#fff;border:1px solid var(--border);border-radius:14px;padding:12px 16px;font-size:14px;line-height:1.7;max-width:26em}
+.turn.ai .bub{background:var(--lav2)}
+.turn .bub b{color:var(--purple-d)}
+.turn .bub .val{font-size:22px;font-weight:800;color:var(--purple-d);letter-spacing:.06em}
+.turn .lbl{font-size:10.5px;color:var(--hint);margin-bottom:3px;letter-spacing:.06em}
+.readback{display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid var(--purple);border-radius:14px;padding:14px 18px;margin-top:6px}
+.readback .spk{width:36px;height:36px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;flex:none}
+.readback b{color:var(--purple-d)}
+/* 機能グリッド */
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.fcard{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px 22px}
+.fcard .ico{width:42px;height:42px;border-radius:12px;background:var(--lav);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.fcard h3{font-size:16px;font-weight:700;margin:0 0 8px}
+.fcard p{font-size:13px;color:var(--muted);margin:0;line-height:1.85}
+.fcard .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.fcard .tags span{font-size:11px;background:var(--lav2);color:var(--purple-d);border:1px solid var(--border);border-radius:999px;padding:3px 9px}
+/* 設定2カラム */
+.twoshot{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.twoshot h4{font-size:16.5px;font-weight:700;margin:16px 0 8px}
+.twoshot p{font-size:13.5px;color:var(--muted);margin:0}
+/* 統計 */
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:8px}
+.stat{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 14px;text-align:center}
+.stat .k{font-size:11px;color:var(--hint);font-weight:700;letter-spacing:.08em;margin-bottom:4px}
+.stat .v{font-size:20px;font-weight:800;color:var(--purple-d)}
+.stat .d{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.5}
+/* 監修 */
+.sv{display:flex;gap:26px;align-items:center;background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:26px 28px}
+.sv .photo{width:120px;height:120px;flex:none;border-radius:50%;padding:10px}
+.sv .photo .ph-tag{margin:0}
+.sv h4{margin:0 0 6px;font-size:16px}
+.sv p{margin:0;font-size:13.5px;color:var(--muted)}
+.sv .role{font-size:11.5px;color:var(--purple);font-weight:800;letter-spacing:.14em;margin-bottom:6px}
+
+/* ---------- ロードマップ ---------- */
+.rm{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;margin-top:14px}
+.rm::before{content:"";position:absolute;left:12.5%;right:12.5%;top:22px;height:3px;background:var(--border2);z-index:0}
+.rmi{position:relative;z-index:1;padding:0 14px;text-align:center}
+.rmi .dot{width:46px;height:46px;border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;background:#fff;border:3px solid var(--border2);color:var(--hint)}
+.rmi.now .dot{background:var(--purple);border-color:var(--purple);color:#fff;box-shadow:0 0 0 6px rgba(127,119,221,.18)}
+.rmi .ph{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--hint);margin-bottom:6px}
+.rmi.now .ph{color:var(--purple)}
+.rmi h4{margin:0 0 6px;font-size:15.5px}
+.rmi p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.75}
+.rmi .st-tag{display:inline-block;margin-top:10px;font-size:10.5px;font-weight:800;letter-spacing:.1em;padding:3px 10px;border-radius:999px;background:var(--lav2);color:var(--hint)}
+.rmi.now .st-tag{background:var(--purple);color:#fff}
+.rmnote{text-align:center;font-size:12px;color:var(--hint);margin-top:24px}
+/* COMING SOON カード */
+.soon{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.scard{background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;position:relative}
+.scard .sh{position:relative;background:var(--lav2);padding:18px 18px 0;height:210px;overflow:hidden;display:flex;align-items:flex-end;justify-content:center}
+.scard .sh .ipad{width:100%;padding:6px;border-radius:12px 12px 0 0;box-shadow:none}
+.scard .sh .ipad img{border-radius:7px 7px 0 0;aspect-ratio:auto;height:auto}
+.scard .sh .phone-shot{width:120px;aspect-ratio:10/16;border-radius:16px 16px 0 0;box-shadow:none;margin-bottom:-4px}
+.scard .sh::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(247,246,252,.9))}
+.scard .pill-soon{position:absolute;top:14px;left:14px;z-index:2}
+.scard .sb{padding:20px 22px 22px}
+.scard h3{margin:0 0 8px;font-size:16.5px}
+.scard p{margin:0;font-size:13px;color:var(--muted);line-height:1.85}
+
+/* ---------- FLOW ---------- */
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;counter-reset:s}
+.step{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:26px 22px;position:relative}
+.step::before{counter-increment:s;content:"0" counter(s);position:absolute;top:14px;right:18px;font-size:30px;font-weight:800;color:var(--lav)}
+.step h4{font-size:15.5px;margin:0 0 8px;font-weight:700;position:relative;z-index:1}
+.step p{font-size:12.5px;color:var(--muted);margin:0;line-height:1.85}
+.step .when{font-size:11px;color:var(--purple);font-weight:700;margin-bottom:9px;letter-spacing:.04em}
+
+/* ---------- PRICE ---------- */
+.psum{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:20px}
+.pcard{border:1px solid var(--border);border-radius:var(--radius);padding:28px 26px;background:#fff}
+.pcard.hi{border:2px solid var(--purple);position:relative;box-shadow:0 10px 30px rgba(127,119,221,.13)}
+.pcard.hi .badge{position:absolute;top:-11px;left:26px;background:var(--purple);color:#fff;font-size:11px;font-weight:700;padding:3px 12px;border-radius:999px}
+.pcard .ptitle{font-size:14px;font-weight:700;margin-bottom:4px}
+.pcard .pdesc{font-size:12px;color:var(--hint);margin-bottom:16px;min-height:2.6em;line-height:1.7}
+.pcard .price{font-size:33px;font-weight:800;color:var(--purple-d);letter-spacing:-.01em;line-height:1.1}
+.pcard .price small{font-size:13px;font-weight:600;color:var(--muted);margin-left:3px}
+.pcard .pnote{font-size:11.5px;color:var(--hint);margin-top:6px}
+.pcard ul{margin:18px 0 0;padding:0;list-style:none;font-size:13px;color:var(--muted)}
+.pcard ul li{padding:6px 0 6px 22px;position:relative;line-height:1.7}
+.pcard ul li::before{content:"";position:absolute;left:4px;top:14px;width:5px;height:9px;border-right:2px solid var(--purple);border-bottom:2px solid var(--purple);transform:rotate(40deg)}
+table.ptable{width:100%;border-collapse:collapse;font-size:13.5px;background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+table.ptable th,table.ptable td{padding:13px 18px;text-align:left;border-bottom:1px solid var(--border)}
+table.ptable thead th{background:var(--lav2);font-size:12.5px;font-weight:700;color:var(--purple-d)}
+table.ptable tbody tr:last-child td{border-bottom:none}
+table.ptable td.r{text-align:right;font-weight:700;white-space:nowrap}
+.pnotes{margin:16px 0 0;padding-left:20px;font-size:12px;color:var(--hint);line-height:1.95}
+.draft{display:inline-flex;align-items:center;gap:6px;background:#FFF6E5;border:1px solid #F0DCB0;color:#8A6320;font-size:11.5px;font-weight:700;padding:5px 13px;border-radius:999px;margin-bottom:16px}
+
+/* ---------- VOICE ---------- */
+.vscroll{display:flex;gap:16px;overflow-x:auto;padding:4px 22px 18px;scroll-snap-type:x mandatory;margin:0 -22px}
+.vcard{flex:0 0 300px;background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px;scroll-snap-align:start}
+.vcard .q{font-size:14px;font-weight:700;line-height:1.7;margin:0 0 12px;color:var(--purple-d)}
+.vcard p{font-size:13px;color:var(--muted);margin:0 0 18px;line-height:1.85}
+.vprof{display:flex;align-items:center;gap:11px;border-top:1px solid var(--border);padding-top:14px}
+.vprof .av{width:40px;height:40px;border-radius:50%;background:var(--lav);flex:none;display:flex;align-items:center;justify-content:center;color:var(--purple-d);font-weight:700;font-size:14px}
+.vprof .nm{font-size:13px;font-weight:700}.vprof .af{font-size:11px;color:var(--hint)}
+
+/* ---------- UPDATE / TOPICS ---------- */
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:38px}
+.panel{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:26px 26px 18px}
+.panel h3{font-size:12px;font-weight:800;letter-spacing:.18em;color:var(--purple);margin:0 0 4px}
+.panel .h3ja{font-size:16.5px;font-weight:700;margin:0 0 18px}
+.newsrow{display:flex;gap:14px;padding:13px 0;border-top:1px solid var(--border);font-size:13.5px;align-items:baseline}
+.newsrow .dt{font-size:11.5px;color:var(--hint);flex:none;width:88px;font-variant-numeric:tabular-nums}
+.newsrow .ver{font-size:10.5px;background:var(--lav);color:var(--purple-d);border-radius:4px;padding:1px 7px;font-weight:700;flex:none}
+.morelink{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--purple-d);margin-top:16px}
+.status{display:flex;align-items:center;gap:10px;background:#F0FAF4;border:1px solid #CBE9D8;color:#2C7150;border-radius:10px;padding:13px 18px;font-size:13.5px;font-weight:600}
+.status .pulse{width:9px;height:9px;border-radius:50%;background:#3EA575;flex:none;box-shadow:0 0 0 4px rgba(62,165,117,.18)}
+
+/* ---------- FAQ ---------- */
+details.faq{background:#fff;border:1px solid var(--border);border-radius:12px;margin-bottom:11px;overflow:hidden}
+details.faq summary{cursor:pointer;padding:18px 22px;font-size:14.5px;font-weight:700;display:flex;align-items:flex-start;gap:13px;list-style:none}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary .qm{color:var(--purple);font-weight:800;flex:none}
+details.faq summary .mk{margin-left:auto;color:var(--purple);font-size:19px;flex:none;line-height:1;transition:.2s}
+details.faq[open] summary .mk{transform:rotate(45deg)}
+details.faq .ans{padding:0 22px 20px 48px;font-size:13.5px;color:var(--muted);line-height:1.9}
+
+/* ---------- CTA / フッター ---------- */
+.cta{background:linear-gradient(135deg,var(--purple-d),var(--purple-dd));color:#fff;border-radius:22px;padding:52px 46px;text-align:center;position:relative;overflow:hidden}
+.cta::before{content:"";position:absolute;left:-90px;top:-90px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.07)}
+.cta h2{font-size:28px;font-weight:800;margin:0 0 12px;position:relative}
+.cta p{opacity:.9;margin:0 0 28px;font-size:14.5px;position:relative}
+.cta .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative}
+.cta .btn{background:#fff;border-color:#fff;color:var(--purple-d)}
+.cta .btn.line{background:#06C755;border-color:#06C755;color:#fff}
+.ctacols{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}
+.ctacol{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px;display:flex;align-items:center;gap:16px}
+.ctacol .ico{width:46px;height:46px;border-radius:12px;background:var(--lav);display:flex;align-items:center;justify-content:center;flex:none}
+.ctacol h4{margin:0 0 3px;font-size:15px;font-weight:700}.ctacol p{margin:0;font-size:12.5px;color:var(--hint)}
+.ctacol .ar{margin-left:auto;color:var(--purple);font-weight:700;flex:none}
+footer{background:var(--lav2);border-top:1px solid var(--border);padding:52px 0 26px}
+.fgrid2{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:34px;margin-bottom:38px}
+footer h5{font-size:11.5px;font-weight:800;letter-spacing:.12em;color:var(--purple);margin:0 0 14px}
+footer ul{list-style:none;margin:0;padding:0;font-size:13px}footer ul li{margin-bottom:9px}
+footer ul a{color:var(--muted)}footer ul a:hover{color:var(--purple-d)}
+footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;border:1px solid var(--border2);border-radius:4px;padding:0 5px;margin-left:5px;vertical-align:middle}
+.fdesc{font-size:12.5px;color:var(--hint);line-height:1.9;margin:14px 0 0;max-width:22em}
+.fbottom{border-top:1px solid var(--border);padding-top:20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;font-size:11.5px;color:var(--hint)}
+.fbottom .sp{margin-left:auto;display:flex;gap:16px}
+.totop{position:fixed;right:22px;bottom:22px;width:44px;height:44px;border-radius:50%;background:var(--purple);color:#fff;border:none;cursor:pointer;box-shadow:0 6px 20px rgba(83,74,183,.34);display:flex;align-items:center;justify-content:center;z-index:50}
+
+/* ---------- 確認モーダル ---------- */
+#gate{position:fixed;inset:0;background:rgba(30,28,46,.55);z-index:200;display:flex;align-items:center;justify-content:center;padding:22px;backdrop-filter:blur(3px)}
+#gate.hide{display:none}
+.gbox{background:#fff;border-radius:18px;max-width:436px;width:100%;padding:34px 32px;text-align:center;box-shadow:0 24px 70px rgba(0,0,0,.3)}
+.gbox .gt{font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--purple);margin-bottom:9px}
+.gbox h3{font-size:18px;margin:0 0 20px;font-weight:700;line-height:1.6}
+.gbox .gbtns{display:flex;gap:11px;justify-content:center;margin-bottom:18px}
+.gbox .gbtns .btn{min-width:104px;justify-content:center}
+.gbox p{font-size:11.5px;color:var(--hint);line-height:1.85;margin:0;text-align:left}
+
+/* ---------- レスポンシブ ---------- */
+@media(max-width:940px){
+  nav.gnav{display:none}.burger{display:flex}
+  .hero-in,.problem,.voicebox,.twoshot,.twocol,.psum,.ctacols{grid-template-columns:1fr}
+  .hero{padding:44px 0 52px}h1.hero-t{font-size:31px}
+  .steps4,.fgrid,.flow,.soon,.rm{grid-template-columns:1fr 1fr}
+  .rm::before{display:none}
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .fgrid2{grid-template-columns:1fr 1fr}
+  section{padding:54px 0}.sechead h2{font-size:24px}
+  .st .arrow{display:none}
+}
+@media(max-width:600px){
+  .steps4,.fgrid,.flow,.soon,.rm,.fgrid2{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  .cta{padding:36px 22px}.cta h2{font-size:22px}
+  .hcta .btn:not(.primary){display:none}
+  h1.hero-t{font-size:26px}
+  .sv{flex-direction:column;text-align:center}
+}
+.pdfshot img{width:100%;border:1px solid #E3E1F2;border-radius:10px;box-shadow:0 14px 36px rgba(58,50,120,.16)}
+.shotgrid{display:grid;grid-template-columns:1.4fr 1fr;gap:28px;align-items:start;margin-top:26px}
+@media(max-width:900px){.shotgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ============ 歯科医療従事者 確認モーダル ============ -->
+<div id="gate">
+  <div class="gbox">
+    <div class="gt">CONFIRMATION</div>
+    <h3>あなたは歯科医療に<br>従事されている方ですか？</h3>
+    <div class="gbtns">
+      <button class="btn primary" onclick="document.getElementById('gate').classList.add('hide')">はい</button>
+      <button class="btn" onclick="location.href='https://www.google.com/'">いいえ</button>
+    </div>
+    <p>本サイトで提供している情報は、歯科医師・歯科衛生士などの歯科医療関係者の方を対象としています。一般の方を対象とした情報提供を目的としたものではありませんので、ご了承ください。</p>
+  </div>
+</div>
+
+<!-- ============ ヘッダー ============ -->
+<header>
+  <div class="hbar">
+    <a href="#" class="logo">KOEMO<span class="dot">.</span><small>コエモ</small></a>
+    <nav class="gnav">
+      <a href="#probing">プロービング検査</a>
+      <a href="#voice-input">音声入力のしくみ</a>
+      <a href="#roadmap">今後の機能</a>
+      <a href="#flow">導入の流れ</a>
+      <a href="#price">料金</a>
+      <a href="#faq">よくある質問</a>
+    </nav>
+    <div class="hcta">
+      <a class="btn line" href="#contact">LINE公式</a>
+      <a class="btn primary" href="#contact">お問い合わせ・デモ依頼</a>
+      <button class="burger" aria-label="メニュー"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ ヒーロー ============ -->
+<div class="hero">
+  <div class="wrap hero-in">
+    <div>
+      <span class="pill-now"><i></i>第1弾リリース：プロービング検査</span>
+      <h1 class="hero-t">プロービング検査を、<br><span class="hl">声で記録</span>する。</h1>
+      <p class="lead">歯周ポケットの値を、口に出すだけで検査表に入っていく。入力された値は読み上げと画面表示で確認できるので、手を止めず、目を離さず、検査に集中できます。歯科衛生士のためのクラウドサービスです。</p>
+      <div class="hero-btns">
+        <a class="btn primary lg" href="#contact">お問い合わせ・デモ依頼</a>
+        <a class="btn lg" href="#probing">機能を見る</a>
+      </div>
+      <div class="hero-note">
+        <span>◆ iPad・PCのブラウザで動作</span>
+        <span>◆ 専用機器・初期費用なし</span>
+        <span>◆ 手入力との併用OK</span>
+      </div>
+    </div>
+    <div>
+      <div class="ipad"><img src="img/st_probing.png" alt="KOEMO プロービング検査画面。音声入力ガイド、部位・検査方向の切替、検査表、テンキー、集計バーが表示されている" loading="eager"></div>
+      <div class="cap">プロービング検査画面（実際の画面・iPad横向き）</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 課題 ============ -->
+<section id="problem">
+  <div class="wrap problem">
+    <div>
+      <!-- PHOTO: 検査中の歯科衛生士。プローブを持つ手元と、記録のために視線を外す様子。横位置・自然光。 -->
+      <div class="photo r43">
+        <div class="ph-in">
+          <span class="ph-tag">PHOTO</span>
+          <div class="ph-desc">検査中の歯科衛生士。プローブを持つ手元と、記録のために視線を外す瞬間（横位置）</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="sechead" style="margin-bottom:20px">
+        <span class="en">PROBLEM</span>
+        <h2>プロービング検査、<br>こんな場面はありませんか</h2>
+      </div>
+      <ul class="plist">
+        <li><b>記録のたびに、手と目が患者さんから離れる</b><span>プローブを持ち替え、視線を紙やモニターへ。検査のリズムが途切れます。</span></li>
+        <li><b>数値を読む人と書く人、2人がかりになる</b><span>一人で完結できないため、他のスタッフの手を借りることに。</span></li>
+        <li><b>転記のときに、値がずれていないか不安になる</b><span>メモから検査表へ、検査表からカルテへ。写し替えのたびにミスの入り口が増えます。</span></li>
+      </ul>
+      <div class="answer">KOEMOなら、声に出した値がそのまま検査表に入り、読み上げで確認できます。<small>プローブを持ったまま、患者さんの口腔内から目を離さずに、一人で検査が完結します。</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ プロービング検査 深掘り ============ -->
+<section class="alt" id="probing">
+  <div class="wrap">
+    <div class="sechead center">
+      <span class="en">PROBING</span>
+      <h2>プロービング検査</h2>
+      <p>実際のチェアサイドでの検査手順に合わせて設計しました。声でも、画面のテンキーでも、同じ検査表に記録されます。</p>
+    </div>
+
+    <div class="bigshot">
+      <div class="ipad"><img src="img/st_probing.png" alt="プロービング検査画面の全体" loading="lazy"></div>
+      <div class="cap">右上・頬側のポケット入力中。上段に音声入力ガイドと部位・検査方向、中央に検査表、下段にテンキーと集計</div>
+    </div>
+
+    <!-- 監修者チェック待ち：検査手順の文言は大野氏（歯科衛生士）の監修後に調整 -->
+    <div class="steps4">
+      <div class="st"><div class="n">1</div><h4>部位と方向を選ぶ</h4><p>右上・左上・右下・左下と、頬側・舌側を切り替えます。進む方向（左右）も指定できます。</p><span class="arrow">›</span></div>
+      <div class="st"><div class="n">2</div><h4>値を声に出す</h4><p>プローブを持ったまま、測った値を口に出します。テンキーからの手入力も同じ検査表に入ります。</p><span class="arrow">›</span></div>
+      <div class="st"><div class="n">3</div><h4>読み上げで確認</h4><p>入力された部位と値が読み上げられ、画面のガイドにも表示されます。目視しなくても誤入力に気づけます。</p><span class="arrow">›</span></div>
+      <div class="st"><div class="n">4</div><h4>次の測定点へ自動送り</h4><p>入力後、カーソルは自動で次の測定点へ進みます。列の端まで続ける「端まで」と1歯ごとに止まる「1本ずつ」、進む向き（→／←）を選べます。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 音声入力のしくみ ============ -->
+<section id="voice-input">
+  <div class="wrap">
+    <div class="sechead">
+      <span class="en">VOICE INPUT</span>
+      <h2>音声入力のしくみ</h2>
+      <p>会話をするのではなく、<b>読み上げと画面表示で確認する</b>方式です。診療中の環境音の中でも、入った値がその場で分かります。</p>
+    </div>
+    <div class="voicebox">
+      <div class="talk">
+        <!-- 監修者チェック待ち：発話例は実装の音声コマンド仕様に合わせて差し替え -->
+        <div class="turn dh"><div class="who">DH</div><div><div class="lbl">歯科衛生士が言う</div><div class="bub">「<b>さん、に、さん</b>」</div></div></div>
+        <div class="turn ai"><div class="who">AI</div><div><div class="lbl">KOEMO が読み上げる</div><div class="bub">右上6番 頬側 <span class="val">3・2・3</span>、次は5番</div></div></div>
+        <div class="turn dh"><div class="who">DH</div><div><div class="lbl">続けて言う</div><div class="bub">「<b>6番 近心 出血</b>」</div></div></div>
+        <div class="turn ai"><div class="who">AI</div><div><div class="lbl">KOEMO が読み上げる</div><div class="bub">右上6番 近心 <span class="val">出血あり</span></div></div></div>
+        <div class="readback">
+          <div class="spk"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></div>
+          <div style="font-size:13.5px;line-height:1.7">画面上の<b>音声入力ガイド</b>にも同じ内容が表示されます。確認方法は<b>会話</b>（AIが短く復唱）／<b>読み上げ</b>（ブラウザ音声）／<b>効果音</b>から選べます。</div>
+        </div>
+      </div>
+      <div>
+        <div class="ipad sm"><img src="img/st_voiceguide.png" alt="音声入力ガイドのヘルプ画面。話し方の例、使える操作、フィードバック方式、注意点" loading="lazy"></div>
+        <div class="cap">音声入力ガイドのヘルプ（実際の画面）。話し方の例は「?」からいつでも確認できます</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 機能一覧 ============ -->
+<section class="alt" id="feature">
+  <div class="wrap">
+    <div class="sechead">
+      <span class="en">FEATURE</span>
+      <h2>検査に必要なものを、ひとつの画面に</h2>
+    </div>
+    <div class="fgrid">
+      <div class="fcard">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16M15 4v16"/></svg></div>
+        <h3>検査法を選べる</h3>
+        <p>6点法・4点法・1点法に対応。医院の算定方針や検査の目的に合わせて切り替えられます。</p>
+        <div class="tags"><span>6点法</span><span>4点法</span><span>1点法</span></div>
+      </div>
+      <div class="fcard">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round"><path d="M4 12h16M12 4v16"/><circle cx="12" cy="12" r="8"/></svg></div>
+        <h3>部位・検査方向の切替</h3>
+        <p>右上・左上・右下・左下の4部位と頬側・舌側を、大きなボタンで切り替え。検査表は部位に合わせて行の並びとラベルの向きが変わります。</p>
+        <div class="tags"><span>全体／部分表示</span><span>進む方向 左右</span></div>
+      </div>
+      <div class="fcard">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <h3>測定方向の自動送り</h3>
+        <p>入力後、カーソルが自動で次の測定点へ進みます。列の端まで連続で進む「端まで」と、1歯ごとに止まる「1本ずつ」を切り替えられ、進む向きも→／←で選べます。</p>
+        <div class="tags"><span>端まで</span><span>1本ずつ</span><span>方向 →／←</span></div>
+      </div>
+      <div class="fcard">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg></div>
+        <h3>前回の記録と比較</h3>
+        <p>「前回と並べる」で各項目の下に前回の行を表示し、今回の値と上下で見比べながら進められます。上部の日付タブで過去の検査にも移動できます。</p>
+        <div class="tags"><span>前回と並べる</span><span>前回値を表示</span><span>日付タブ</span></div>
+      </div>
+      <div class="fcard">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round"><path d="M12 3c3 0 5 2 5 5 0 4-2 6-2 10-1 2-2 3-3 3s-2-1-3-3c0-4-2-6-2-10 0-3 2-5 5-5z"/></svg></div>
+        <h3>歯の状態は患者ごとに</h3>
+        <p>健全・欠損・乳歯・補綴・インプラントを患者ごとに設定（複数の組み合わせも可）。設定は検査表とPDFに反映され、欠損歯には入力できないよう表示されます。</p>
+        <div class="tags"><span>乳歯切替</span><span>欠損 ✕表示</span></div>
+      </div>
+      <div class="fcard">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></div>
+        <h3>表示する項目を選べる</h3>
+        <p>動揺度・根分岐部・プラーク・ポケット（出血・排膿）・退縮度から、医院で記録する項目だけを表示できます。</p>
+        <div class="tags"><span>動揺度</span><span>根分岐部</span><span>プラーク</span><span>排膿</span><span>退縮度</span></div>
+      </div>
+    </div>
+
+    <div style="margin-top:44px">
+      <div class="sechead" style="margin-bottom:18px"><span class="en">SUMMARY</span><h2 style="font-size:22px">検査結果はその場で集計</h2></div>
+      <div class="stats">
+        <div class="stat"><div class="k">PPD平均</div><div class="v">2.6<small style="font-size:12px">mm</small></div><div class="d">ポケット深さの平均</div></div>
+        <div class="stat"><div class="k">深さ分布</div><div class="v">72<small style="font-size:12px">%</small></div><div class="d">1〜3mm / 4〜6mm / 7mm〜</div></div>
+        <div class="stat"><div class="k">BOP</div><div class="v">22<small style="font-size:12px">%</small></div><div class="d">プロービング時の出血率</div></div>
+        <div class="stat"><div class="k">PCR</div><div class="v">35<small style="font-size:12px">%</small></div><div class="d">プラーク付着率</div></div>
+        <div class="stat"><div class="k">PISA / PESA</div><div class="v">148<small style="font-size:12px">mm²</small></div><div class="d">炎症表面積 / 上皮表面積</div></div>
+      </div>
+      <p style="font-size:12.5px;color:var(--hint);margin:14px 0 0">集計は入力のたびにその場で更新されます。検査表は保存のほか、<b>PDFとして出力</b>できます。</p>
+      <div class="shotgrid">
+        <div>
+          <div class="ipad sm"><img src="img/st_compare.png" alt="前回と並べる表示。動揺度・プラーク・ポケットの各項目の下に前回の行が並ぶ" loading="lazy"></div>
+          <div class="cap">「前回と並べる」。今回の値の下に前回の行が並び、変化をその場で確認できます</div>
+        </div>
+        <div>
+          <div class="pdfshot"><img src="img/st_pdf.png" alt="検査結果PDF。患者番号、検査者、検査日、歯周ポケット4mm以上の割合、BOP、上下顎の検査表、医院情報" loading="lazy"></div>
+          <div class="cap">出力される検査結果PDF（A4）。医院情報つきで、印刷してそのままお渡しできます</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 設定画面 2カラム ============ -->
+<section id="settings">
+  <div class="wrap">
+    <div class="sechead">
+      <span class="en">SETTING</span>
+      <h2>表示する項目と、患者ごとの歯の状態</h2>
+      <p>記録する検査項目と点数法は医院の運用に合わせて、歯の状態は患者ごとに。どちらも検査画面からそのまま開けます。</p>
+    </div>
+    <div class="twoshot">
+      <div>
+        <div class="ipad sm"><img src="img/st_display.png" alt="表示設定。表示する検査項目（動揺度・根分岐部・プラーク・ポケット・排膿・退縮度）とポケット点数法（6点法・4点法・1点法）" loading="lazy"></div>
+        <h4>表示設定</h4>
+        <p>表示する検査項目（動揺度・根分岐部・プラーク・ポケット・排膿・退縮度）と、ポケットの点数法（6点法／4点法／1点法）を選びます。既定のままでもすぐに始められます。</p>
+      </div>
+      <div>
+        <div class="ipad sm"><img src="img/st_toothstate.png" alt="歯の状態の設定画面。上顎・下顎の歯をタップして健全・欠損・乳歯・補綴・インプラントを設定" loading="lazy"></div>
+        <h4>歯の状態（患者ごと）</h4>
+        <p>上顎・下顎の歯をタップして、健全・欠損・乳歯・補綴・インプラントを設定。検査表とPDFに自動で反映されます。</p>
+      </div>
+    </div>
+
+    <div class="sechead" style="margin-top:52px">
+      <span class="en">PATIENT</span>
+      <h2>患者と来院履歴も、同じ画面の中で</h2>
+      <p>カルテ番号・患者名・来院日で患者を探し、その場で検査を始められます。過去の検査は来院履歴からいつでも開けます。</p>
+    </div>
+    <div class="twoshot">
+      <div>
+        <div class="ipad sm"><img src="img/st_home.png" alt="ホーム画面。カルテ番号・患者名・来院日で患者を検索し、患者を新規作成できる" loading="lazy"></div>
+        <h4>患者検索（ホーム）</h4>
+        <p>カルテ番号・患者名・来院日のいずれかを入れると一覧が出ます。初診の方は「患者を新規作成」からその場で登録。</p>
+      </div>
+      <div>
+        <div class="ipad sm"><img src="img/st_patient.png" alt="患者詳細画面。基本情報カードと来院履歴、新規セッションボタン" loading="lazy"></div>
+        <h4>患者詳細・来院履歴</h4>
+        <p>基本情報と来院履歴を一覧。「新規セッション」で本日の検査を開始し、過去の回は「検査結果」から開けます。診療メモや日時の修正もここから。</p>
+      </div>
+    </div>
+
+    <!-- 監修者：大野氏（歯科衛生士）の監修後に写真・氏名・経歴を差し込む。掲載可否も要確認 -->
+    <div class="sv" style="margin-top:40px">
+      <div class="photo">
+        <div class="ph-in"><span class="ph-tag">PHOTO</span></div>
+      </div>
+      <div>
+        <div class="role">SUPERVISED BY</div>
+        <h4>歯科衛生士監修のもと、検査の手順を設計しています</h4>
+        <p>プロービング検査の画面と手順は、臨床経験の豊富な歯科衛生士による監修を受けて調整しています。（監修者の氏名・経歴は掲載準備中）</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ロードマップ ============ -->
+<section class="alt" id="roadmap">
+  <div class="wrap">
+    <div class="sechead center">
+      <span class="en">ROADMAP</span>
+      <h2>検査から、説明・書類・お渡しまで、順に広げていきます</h2>
+      <p>KOEMOは段階的に機能を公開します。第1弾のプロービング検査からご利用いただけ、以降の機能は同じ画面の中に追加されていきます。</p>
+    </div>
+    <div class="rm">
+      <div class="rmi now">
+        <div class="dot">1</div>
+        <div class="ph">PHASE 1</div>
+        <h4>プロービング検査</h4>
+        <p>音声入力・読み上げ確認・検査表・統計・PDF出力</p>
+        <span class="st-tag">公開中</span>
+      </div>
+      <div class="rmi">
+        <div class="dot">2</div>
+        <div class="ph">PHASE 2</div>
+        <h4>書類生成</h4>
+        <p>検査値と診療中の録音から、保険算定に必要な書類をAIが下書き</p>
+        <span class="st-tag">公開予定</span>
+      </div>
+      <div class="rmi">
+        <div class="dot">3</div>
+        <div class="ph">PHASE 3</div>
+        <h4>患者説明（コンサル）</h4>
+        <p>口腔内写真・動画・レントゲンを並べて説明。picmoR連携</p>
+        <span class="st-tag">公開予定</span>
+      </div>
+      <div class="rmi">
+        <div class="dot">4</div>
+        <div class="ph">PHASE 4</div>
+        <h4>患者用アプリ</h4>
+        <p>患者さんがご自宅のスマートフォンで書類・写真を閲覧</p>
+        <span class="st-tag">公開予定</span>
+      </div>
+    </div>
+    <div class="rmnote">公開の順序・時期は変更になる場合があります。最新情報はアップデート情報でお知らせします。</div>
+  </div>
+</section>
+
+<!-- ============ COMING SOON ============ -->
+<section id="coming">
+  <div class="wrap">
+    <div class="sechead">
+      <span class="en">COMING SOON</span>
+      <h2>今後公開予定の機能</h2>
+      <p>開発中の画面です。公開時に仕様が変わる場合があります。</p>
+    </div>
+    <div class="soon">
+      <div class="scard">
+        <div class="sh"><span class="pill-soon">COMING SOON</span><div class="ipad"><img src="img/reportedit.png" alt="書類の編集画面（開発中）" loading="lazy"></div></div>
+        <div class="sb">
+          <h3>書類生成</h3>
+          <p>検査値と診療中の会話から、歯科疾患管理に関する文書・歯科衛生実地指導書などをAIが下書き。医院で扱う項目は設定で固定でき、必要な部分だけ手直しできます。</p>
+        </div>
+      </div>
+      <div class="scard">
+        <div class="sh"><span class="pill-soon">COMING SOON</span><div class="ipad"><img src="img/explain.png" alt="患者説明・メディア一覧画面（開発中）" loading="lazy"></div></div>
+        <div class="sb">
+          <h3>患者説明（コンサル）</h3>
+          <p>口腔内写真・動画・レントゲンを一覧から呼び出し、5/9枚法や術前術後の比較で提示。picmoRや院内NASの画像もそのまま使えます。</p>
+        </div>
+      </div>
+      <div class="scard">
+        <div class="sh"><span class="pill-soon">COMING SOON</span><div class="phone-shot"><img src="img/p-home.png" alt="患者用アプリ ホーム画面（開発中）" loading="lazy"></div></div>
+        <div class="sb">
+          <h3>患者用アプリ（ご自宅で閲覧）</h3>
+          <p>共有された書類・写真・説明動画を、患者さんがスマートフォンから見返せます。パスコード保護、閲覧期限、医院のロゴ・テーマカラーに対応。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FLOW ============ -->
+<section class="alt" id="flow">
+  <div class="wrap">
+    <div class="sechead">
+      <span class="en">FLOW</span>
+      <h2>ご利用開始までの流れ</h2>
+      <p>専用機器の設置は不要です。お手持ちのiPadまたはPCのブラウザからご利用いただけます。</p>
+    </div>
+    <div class="flow">
+      <div class="step"><div class="when">STEP</div><h4>お問い合わせ・デモ</h4><p>フォームまたはLINEからご連絡ください。オンラインで実際の音声入力をご覧いただけます。</p></div>
+      <div class="step"><div class="when">STEP</div><h4>お申し込み・初期設定</h4><p>医院情報とオーナーアカウントを登録します。検査を担当する歯科衛生士の方のアカウントは、サポートが追加します。</p></div>
+      <div class="step"><div class="when">STEP</div><h4>表示設定</h4><p>検査画面の「表示設定」で、表示する検査項目と点数法（6点法／4点法／1点法）を医院の運用に合わせます。既定のままでもすぐに始められます。</p></div>
+      <div class="step"><div class="when">STEP</div><h4>ご利用開始</h4><p>毎月1,000クレジットの無料枠つきで、その日から音声入力をご利用いただけます。足りない分はAIクレジットをチャージ（1,000〜10,000）。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICE ============ -->
+<section id="price">
+  <div class="wrap">
+    <div class="sechead">
+      <span class="en">PRICE</span>
+      <h2>料金</h2>
+      <p>月額の基本利用料に、ご利用人数分のユーザー料金を加えたかたちです。音声入力などAIの利用料は、使った分だけをチャージ式でお支払いいただきます。</p>
+    </div>
+    <div class="draft">◆ 金額は仮置きです。確定後に差し替えてください（ベータ期間中は基本利用料無料・AIクレジット無料枠 月1,000）</div>
+    <div class="psum">
+      <div class="pcard">
+        <div class="ptitle">基本利用料</div>
+        <div class="pdesc">院長（オーナー）＋スタッフ1名分を含みます</div>
+        <div class="price">¥○,○○○<small>／月</small></div>
+        <div class="pnote">税込・初期費用なし</div>
+        <ul><li>プロービング検査（音声・手入力）</li><li>検査結果の保存・PDF出力</li><li>担当者ごとの検査設定</li><li>今後公開する機能も同じ契約内で追加</li></ul>
+      </div>
+      <div class="pcard hi">
+        <span class="badge">従量</span>
+        <div class="ptitle">AIクレジット</div>
+        <div class="pdesc">音声入力・読み上げなどAIの処理で消費します</div>
+        <div class="price">¥1,000<small>／1,000クレジット</small></div>
+        <div class="pnote">1クレジット＝1円相当・毎月無料枠あり</div>
+        <ul><li>チャージ式（前払い）・1,000／3,000／5,000／10,000から選択</li><li>毎月1,000クレジットの無料枠</li><li>残高500クレジット未満でメール通知</li><li>利用状況の履歴を画面で確認</li></ul>
+      </div>
+      <div class="pcard">
+        <div class="ptitle">追加ユーザー</div>
+        <div class="pdesc">歯科衛生士の方の人数分を追加できます</div>
+        <div class="price">¥○○○<small>／1名・月</small></div>
+        <div class="pnote">検査担当者の記録に使用します</div>
+        <ul><li>検査者としてPDFに記録</li><li>スタッフごとのログインID・パスワード</li><li>権限はオーナー／スタッフの2種</li></ul>
+      </div>
+    </div>
+    <table class="ptable">
+      <thead><tr><th>項目</th><th>内容</th><th style="text-align:right">料金（仮）</th></tr></thead>
+      <tbody>
+        <tr><td>初期費用</td><td>アカウント開設・初期設定</td><td class="r">無料</td></tr>
+        <tr><td>基本利用料</td><td>オーナー＋スタッフ1名を含む</td><td class="r">¥○,○○○／月</td></tr>
+        <tr><td>追加ユーザー</td><td>1名につき</td><td class="r">¥○○○／月</td></tr>
+        <tr><td>AIクレジット</td><td>1,000／3,000／5,000／10,000クレジットから選択</td><td class="r">1クレジット＝¥1</td></tr>
+        <tr><td>月次無料クレジット</td><td>全医院一律・毎月付与（繰り越しなし）</td><td class="r">1,000クレジット</td></tr>
+      </tbody>
+    </table>
+    <ul class="pnotes">
+      <li>表示価格はすべて税込です。</li>
+      <li>AIクレジットは、実行した機能で使用した処理量に応じて消費されます。音声入力による検査1回（約5分）で80〜100クレジット程度が目安です。</li>
+      <li>AIクレジットには有効期限があります。詳細は利用規約をご確認ください。</li>
+      <li>今後公開予定の機能（書類生成・患者説明・患者用アプリ）の料金は、公開時にお知らせします。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ VOICE（導入医院の声）※ダミー。実ユーザーの声に差し替え ============ -->
+<section class="alt" id="voice">
+  <div class="wrap">
+    <div class="sechead">
+      <span class="en">VOICE</span>
+      <h2>導入医院の声</h2>
+      <p>プロービング検査でKOEMOをお使いいただいている歯科衛生士・先生からのご感想です。</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="vscroll">
+      <div class="vcard"><p class="q">検査中に手を止めなくなった</p><p>これまでは値を言って、記録する人がもう一人必要でした。声で入るようになってから、一人で検査が完結します。読み上げで確認できるので入力ミスも減りました。</p><div class="vprof"><div class="av">A</div><div><div class="nm">歯科衛生士</div><div class="af">◯◯歯科クリニック</div></div></div></div>
+      <div class="vcard"><p class="q">患者さんから目を離さずに済む</p><p>プローブを持ったまま値を口にするだけなので、視線が口腔内から外れません。患者さんも「ちゃんと見てもらえている」と感じてくれているようです。</p><div class="vprof"><div class="av">B</div><div><div class="nm">歯科衛生士</div><div class="af">◯◯デンタルオフィス</div></div></div></div>
+      <div class="vcard"><p class="q">前回値が見えるのがいい</p><p>検査表に前回の値が薄く出るので、変化に気づきながら進められます。患者さんへの説明も、その場で数字を示せるようになりました。</p><div class="vprof"><div class="av">C</div><div><div class="nm">院長</div><div class="af">◯◯歯科医院</div></div></div></div>
+      <div class="vcard"><p class="q">今の記録の仕方のまま使える</p><p>表示する項目や点数法を医院の運用に合わせられるので、記録の仕方を変えずに導入できました。iPadはチェアに置いたままです。</p><div class="vprof"><div class="av">D</div><div><div class="nm">院長</div><div class="af">◯◯ファミリー歯科</div></div></div></div>
+    </div>
+    <div style="padding:0 22px"><a class="morelink" href="#">導入事例をもっと見る →</a></div>
+  </div>
+</section>
+
+<!-- ============ UPDATE / TOPICS ============ -->
+<section>
+  <div class="wrap">
+    <div class="twocol">
+      <div class="panel">
+        <h3>UPDATE</h3><div class="h3ja">アップデート情報</div>
+        <div class="newsrow"><span class="dt">2026.08.31</span><span class="ver">ver β</span><span>ユーザー切り替え機能の検討を開始しました</span></div>
+        <div class="newsrow"><span class="dt">2026.08.03</span><span class="ver">ver 0.2.0</span><span>ベータ版サービスの提供を開始しました</span></div>
+        <div class="newsrow"><span class="dt">2026.06.23</span><span class="ver">ver β</span><span>プロービング検査画面を刷新しました</span></div>
+        <a class="morelink" href="#">もっと見る →</a>
+      </div>
+      <div class="panel">
+        <h3>MAINTENANCE</h3><div class="h3ja">障害・メンテナンス情報</div>
+        <div class="status"><span class="pulse"></span>現在、障害・メンテナンスの報告はございません</div>
+        <div class="h3ja" style="margin-top:26px">TOPICS ／ トピックス</div>
+        <div class="newsrow"><span class="dt">2026.08.17</span><span>AIクレジット（ウォレット）機能の要件を公開しました</span></div>
+        <div class="newsrow"><span class="dt">2026.06.12</span><span>ベータ版フィードバック会議を実施しました</span></div>
+        <a class="morelink" href="#">もっと見る →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="alt" id="faq">
+  <div class="wrap" style="max-width:880px">
+    <div class="sechead center"><span class="en">FAQ</span><h2>よくあるご質問</h2></div>
+    <details class="faq" open><summary><span class="qm">Q</span>専用の機器を購入する必要はありますか？<span class="mk">＋</span></summary><div class="ans">いいえ。KOEMOはブラウザで動作するため、お手持ちのiPadまたはPCからご利用いただけます。チェアに設置された端末でも、1人1台の運用でもお使いいただけます。マイクは端末内蔵のものでご利用いただけます。</div></details>
+    <details class="faq"><summary><span class="qm">Q</span>診療中の環境音があっても、音声は認識されますか？<span class="mk">＋</span></summary><div class="ans">入力された値は読み上げと画面表示で必ず確認できる設計です。認識が違っていた場合は、そのまま言い直すか、テンキーから手入力で修正できます。導入前のデモで、実際の診療環境に近い状態でお試しいただくことをおすすめしています。</div></details>
+    <details class="faq"><summary><span class="qm">Q</span>今使っている検査の順番（流れ）のまま使えますか？<span class="mk">＋</span></summary><div class="ans">部位（右上・左上・右下・左下）・面（頬側・舌側）・進む向きは自由に切り替えられ、列の端まで連続で進む「端まで」と1歯ごとに止まる「1本ずつ」を選べます。6点法・4点法・1点法にも対応しています。</div></details>
+    <details class="faq"><summary><span class="qm">Q</span>AIクレジットはどのくらい使いますか？<span class="mk">＋</span></summary><div class="ans">音声入力による検査1回（約5分）で80〜100クレジット程度が目安です。毎月1,000クレジットの無料枠が付与されるため、月10回程度の検査は無料枠内でお試しいただけます。使用量はAIクレジット画面の利用状況で確認できます。</div></details>
+    <details class="faq"><summary><span class="qm">Q</span>AIクレジットを使い切ると、検査できなくなりますか？<span class="mk">＋</span></summary><div class="ans">音声入力はご利用いただけなくなりますが、テンキーからの手入力での検査記録は継続してご利用いただけます。残高が少なくなった段階でメールにて通知いたします。</div></details>
+    <details class="faq"><summary><span class="qm">Q</span>書類の作成や患者説明の機能はいつ使えますか？<span class="mk">＋</span></summary><div class="ans">書類生成・患者説明（コンサル）・患者用アプリは順次公開を予定しています。公開時期は本サイトのアップデート情報でお知らせします。いずれも現在の契約の中に追加されていく形です。</div></details>
+    <details class="faq"><summary><span class="qm">Q</span>歯科衛生士が複数名います。アカウントは共用できますか？<span class="mk">＋</span></summary><div class="ans">検査の担当者を記録として残すため、歯科衛生士の方ごとにアカウントを作成いただくことを前提としています。アカウントの追加はサポートにて対応します。</div></details>
+    <details class="faq"><summary><span class="qm">Q</span>診断に使えるのでしょうか？<span class="mk">＋</span></summary><div class="ans">KOEMOは診断を行うためのものではなく、検査記録を支援するサービスです。診断および治療方針の決定は歯科医師の判断によって行われます。</div></details>
+    <div style="text-align:center;margin-top:26px"><a class="morelink" href="#">よくあるご質問をすべて見る →</a></div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="cta">
+      <h2>実際の音声入力を、デモでご覧ください</h2>
+      <p>オンラインでのデモを実施しています。導入のご相談・お見積りもお気軽にどうぞ。</p>
+      <div class="btns"><a class="btn lg" href="#">お問い合わせ・デモ依頼</a><a class="btn lg line" href="#">LINEで相談する</a></div>
+    </div>
+    <div class="ctacols">
+      <a class="ctacol" href="#faq"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.7"/><path d="M12 17h.01"/></svg></div><div><h4>よくあるご質問</h4><p>導入前のご不明点はこちら</p></div><span class="ar">→</span></a>
+      <a class="ctacol" href="#"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div><div><h4>資料ダウンロード</h4><p>サービス概要・料金の資料</p></div><span class="ar">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ フッター ============ -->
+<footer>
+  <div class="wrap">
+    <div class="fgrid2">
+      <div><a href="#" class="logo">KOEMO<span class="dot">.</span></a><p class="fdesc">プロービング検査を、声で記録する。歯科衛生士のためのクラウドサービスです。検査から説明・書類・お渡しまで、順に広げていきます。</p></div>
+      <div><h5>SERVICE</h5><ul><li><a href="#probing">プロービング検査</a></li><li><a href="#voice-input">音声入力のしくみ</a></li><li><a href="#settings">検査設定</a></li><li><a href="#roadmap">今後の機能</a></li><li class="soon-li">書類生成<small>SOON</small></li><li class="soon-li">患者説明<small>SOON</small></li><li class="soon-li">患者用アプリ<small>SOON</small></li></ul></div>
+      <div><h5>SUPPORT</h5><ul><li><a href="#flow">導入の流れ</a></li><li><a href="#price">料金</a></li><li><a href="#faq">よくあるご質問</a></li><li><a href="#">アップデート情報</a></li><li><a href="#">障害・メンテナンス情報</a></li></ul></div>
+      <div><h5>COMPANY</h5><ul><li><a href="#contact">お問い合わせ</a></li><li><a href="#">運営会社</a></li><li><a href="#">利用規約</a></li><li><a href="#">個人情報保護方針</a></li><li><a href="#">特定商取引法に基づく表記</a></li></ul></div>
+    </div>
+    <div class="fbottom"><span>© KOEMO / Passione inc.</span><span class="sp"><a href="#">利用規約</a><a href="#">個人情報保護方針</a></span></div>
+  </div>
+</footer>
+
+<button class="totop" onclick="window.scrollTo({top:0})" aria-label="ページ上部へ">↑</button>
+</body>
+</html>
