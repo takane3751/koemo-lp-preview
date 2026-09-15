@@ -57,6 +57,7 @@ section.alt{background:var(--lav3)}
 .ipad{background:#1B1C22;border-radius:22px;padding:12px;box-shadow:0 24px 64px rgba(58,50,120,.22)}
 .ipad img{border-radius:12px;width:100%;aspect-ratio:4/3;object-fit:cover}
 .ipad.sm{border-radius:16px;padding:8px}.ipad.sm img{border-radius:9px}
+.ipad.wide img{aspect-ratio:auto;height:auto}
 .cap{font-size:12px;color:var(--hint);text-align:center;margin-top:12px}
 /* 実画面（スマホ） */
 .phone-shot{width:236px;aspect-ratio:10/19;border-radius:28px;overflow:hidden;margin:0 auto;box-shadow:0 22px 50px rgba(58,50,120,.22)}
@@ -128,7 +129,8 @@ h1.hero-t .hl::after{content:"";position:absolute;left:0;right:0;bottom:2px;heig
 .twoshot h4{font-size:16.5px;font-weight:700;margin:16px 0 8px}
 .twoshot p{font-size:13.5px;color:var(--muted);margin:0}
 /* 統計 */
-.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:8px}
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:8px}
+@media(max-width:980px){.stats{grid-template-columns:repeat(3,1fr)}}
 .stat{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 14px;text-align:center}
 .stat .k{font-size:11px;color:var(--hint);font-weight:700;letter-spacing:.08em;margin-bottom:4px}
 .stat .v{font-size:20px;font-weight:800;color:var(--purple-d)}
@@ -305,8 +307,9 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
   <div class="hbar">
     <a href="#" class="logo">KOEMO<span class="dot">.</span><small>コエモ</small></a>
     <nav class="gnav">
-      <a href="#probing">プロービング検査</a>
-      <a href="#voice-input">音声入力のしくみ</a>
+      <a href="#probing">入力の使い分け</a>
+      <a href="#change">前回との変化</a>
+      <a href="#compare">比較</a>
       <a href="#roadmap">今後の機能</a>
       <a href="#flow">導入の流れ</a>
       <a href="#price">料金</a>
@@ -325,21 +328,21 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
   <div class="wrap hero-in">
     <div>
       <span class="pill-now"><i></i>第1弾リリース：プロービング検査</span>
-      <h1 class="hero-t">プロービング検査を、<br><span class="hl">声で記録</span>する。</h1>
-      <p class="lead">歯周ポケットの値を、口に出すだけで検査表に入っていく。入力された値は読み上げと画面表示で確認できるので、手を止めず、目を離さず、検査に集中できます。歯科衛生士のためのクラウドサービスです。</p>
+      <h1 class="hero-t">プロービング検査を、<br><span class="hl">止めずに</span>終える。</h1>
+      <p class="lead">ポケットと歯肉退縮量は声で連続入力。出血・排膿・プラークはタップで素早く。前回の記録が入った状態から始まるので、変わったところだけを直していけます。歯科衛生士のためのクラウドサービスです。</p>
       <div class="hero-btns">
         <a class="btn primary lg" href="#contact">お問い合わせ・デモ依頼</a>
-        <a class="btn lg" href="#probing">機能を見る</a>
+        <a class="btn lg" href="#probing">画面を見る</a>
       </div>
       <div class="hero-note">
         <span>◆ iPad・PCのブラウザで動作</span>
         <span>◆ 専用機器・初期費用なし</span>
-        <span>◆ 手入力との併用OK</span>
+        <span>◆ 声とタップを使い分け</span>
       </div>
     </div>
     <div>
-      <div class="ipad"><img src="img/st_probing.png" alt="KOEMO プロービング検査画面。音声入力ガイド、部位・検査方向の切替、検査表、テンキー、集計バーが表示されている" loading="eager"></div>
-      <div class="cap">プロービング検査画面（実際の画面・iPad横向き）</div>
+      <div class="ipad wide"><img src="img/dm_probing.png" alt="KOEMO プロービング検査画面。音声入力、検査部位、検査担当、検査表、テンキー、集計バーが表示されている" loading="eager"></div>
+      <div class="cap">プロービング検査画面（iPad横向き）</div>
     </div>
   </div>
 </div>
@@ -363,62 +366,111 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
       </div>
       <ul class="plist">
         <li><b>記録のたびに、手と目が患者さんから離れる</b><span>プローブを持ち替え、視線を紙やモニターへ。検査のリズムが途切れます。</span></li>
-        <li><b>数値を読む人と書く人、2人がかりになる</b><span>一人で完結できないため、他のスタッフの手を借りることに。</span></li>
-        <li><b>転記のときに、値がずれていないか不安になる</b><span>メモから検査表へ、検査表からカルテへ。写し替えのたびにミスの入り口が増えます。</span></li>
+        <li><b>出血・排膿・プラークの入力に、思ったより時間がかかる</b><span>部位を口で説明している余裕はなく、かといって画面上の位置を探しながらでは進みません。</span></li>
+        <li><b>前回より良くなったのか、その場では分かりにくい</b><span>数字は並んでいても、どこが改善してどこが悪化したかは、見比べないと気づけません。</span></li>
       </ul>
-      <div class="answer">KOEMOなら、声に出した値がそのまま検査表に入り、読み上げで確認できます。<small>プローブを持ったまま、患者さんの口腔内から目を離さずに、一人で検査が完結します。</small></div>
+      <div class="answer">KOEMOは、<b>声で入れるところと、タップで入れるところを分けています。</b><small>ポケットと歯肉退縮量は声で連続入力。出血・排膿・プラークはタップ。前回値が入った状態から始まるので、変わったところだけを直していけます。</small></div>
     </div>
   </div>
 </section>
 
-<!-- ============ プロービング検査 深掘り ============ -->
+<!-- ============ 入力の使い分け ============ -->
 <section class="alt" id="probing">
   <div class="wrap">
     <div class="sechead center">
-      <span class="en">PROBING</span>
-      <h2>プロービング検査</h2>
-      <p>実際のチェアサイドでの検査手順に合わせて設計しました。声でも、画面のテンキーでも、同じ検査表に記録されます。</p>
+      <span class="en">INPUT</span>
+      <h2>声とタップを、使い分ける</h2>
+      <p>速いほうで入れられることが、現場では一番の価値です。音声は<b>ポケットと歯肉退縮量</b>に絞り、それ以外はタップで完結します。</p>
     </div>
 
     <div class="bigshot">
-      <div class="ipad"><img src="img/st_probing.png" alt="プロービング検査画面の全体" loading="lazy"></div>
-      <div class="cap">右上・頬側のポケット入力中。上段に音声入力ガイドと部位・検査方向、中央に検査表、下段にテンキーと集計</div>
+      <div class="ipad wide"><img src="img/dm_probing.png" alt="KOEMO プロービング検査画面。左上に音声入力、右上に検査部位と検査担当、中央に検査表、下にテンキーと集計バー" loading="lazy"></div>
+      <div class="cap">プロービング検査画面。左上が音声、右上が検査部位と検査担当、中央が検査表、下がテンキーと集計</div>
     </div>
 
-    <!-- 監修者チェック待ち：検査手順の文言は大野氏（歯科衛生士）の監修後に調整 -->
-    <div class="steps4">
-      <div class="st"><div class="n">1</div><h4>部位と方向を選ぶ</h4><p>右上・左上・右下・左下と、頬側・舌側を切り替えます。進む方向（左右）も指定できます。</p><span class="arrow">›</span></div>
-      <div class="st"><div class="n">2</div><h4>値を声に出す</h4><p>プローブを持ったまま、測った値を口に出します。テンキーからの手入力も同じ検査表に入ります。</p><span class="arrow">›</span></div>
-      <div class="st"><div class="n">3</div><h4>読み上げで確認</h4><p>入力された部位と値が読み上げられ、画面のガイドにも表示されます。目視しなくても誤入力に気づけます。</p><span class="arrow">›</span></div>
-      <div class="st"><div class="n">4</div><h4>次の測定点へ自動送り</h4><p>入力後、カーソルは自動で次の測定点へ進みます。列の端まで続ける「端まで」と1歯ごとに止まる「1本ずつ」、進む向き（→／←）を選べます。</p></div>
+    <div class="twoshot" style="margin-top:34px">
+      <div>
+        <div class="pdfshot"><img src="img/dm_voicezoom.png" alt="音声入力の操作エリア。AI音声入力ボタンと入力内容の表示欄" loading="lazy"></div>
+        <h4 style="margin-top:14px">声で入れる ― ポケット・歯肉退縮量</h4>
+        <p>「<b>3、2、3</b>」と測った値を続けて言うだけ。カーソルは次の測定点へ自動で進みます。歯を指定したいときは「6番 3、2、3」、1点だけ直したいときは「6番の遠心頬側に 3」。</p>
+        <p style="margin-top:8px"><b>入力値は読み上げません。</b>復唱を待つ時間が検査の速度を落とすためです。入った値は<b>効果音と画面表示</b>で確認します。</p>
+      </div>
+      <div>
+        <div class="ipad sm wide"><img src="img/dm_probing_bop.png" alt="出血モードを選んだ検査画面。左の項目ボタンで出血が選択されている" loading="lazy"></div>
+        <h4 style="margin-top:14px">タップで入れる ― 出血・排膿・プラーク・動揺度・根分岐部</h4>
+        <p>「出血」を押して、出血しているところを<b>続けてタップ</b>。排膿も同じ操作です。プラーク・動揺度・根分岐部は、値を直接タップするだけ。<b>どの項目でも操作が同じ</b>なので迷いません。</p>
+      </div>
+    </div>
+
+    <div style="margin-top:22px;padding:12px 16px;border-radius:10px;background:var(--lav2);font-size:12.5px;color:var(--muted);line-height:1.8">
+      ◆ 出血・排膿についても、歯番号を指定した音声入力（「6番 近心 出血」）に対応できないか検討しています。基本はタップのまま、声でも入れられる選択肢として用意する想定です。
     </div>
   </div>
 </section>
 
-<!-- ============ 音声入力のしくみ ============ -->
-<section id="voice-input">
+<!-- ============ 前回からの変化 ============ -->
+<section id="change">
+  <div class="wrap">
+    <div class="sechead center">
+      <span class="en">CHANGE</span>
+      <h2>前回から何が変わったか、その場で分かる</h2>
+      <p>前回値が入った状態から始まり、<b>今回入力したところだけ</b>が濃く表示されます。重症度のレンジをまたいだ変化は、マークと音で知らせます。</p>
+    </div>
+
+    <div class="bigshot">
+      <div class="pdfshot"><img src="img/dm_chartzoom.png" alt="検査表の拡大。前回のままの値は薄いグレー、今回入力した値は濃く表示。出血は今回がベタ塗り・前回が斜線、排膿は今回が実線の丸・前回が破線の丸。改善は青緑の上向き三角、悪化は赤の下向き三角" loading="lazy"></div>
+      <div class="cap">薄いグレー＝前回のまま／濃い文字＝今回入力。出血は斜線が前回・ベタが今回、排膿は破線の丸が前回・実線の丸が今回</div>
+    </div>
+
+    <div class="steps4" style="margin-top:28px">
+      <div class="st"><div class="n">1</div><h4>前回値から始まる</h4><p>ポケットも出血もプラークも、前回の記録が入った状態で開きます。変わったところだけを直していけます。</p><span class="arrow">›</span></div>
+      <div class="st"><div class="n">2</div><h4>今回の入力だけ濃くなる</h4><p>触っていない点は薄いグレーのまま。「前回から入っていた」と「今回入れた」が一目で分かります。</p><span class="arrow">›</span></div>
+      <div class="st"><div class="n">3</div><h4>レンジをまたぐと印がつく</h4><p>軽度→中等度→重度のレンジを越えたときだけ、<b>改善は青緑の上向き三角</b>、<b>悪化は赤の下向き三角</b>を数字の上に表示します。</p><span class="arrow">›</span></div>
+      <div class="st"><div class="n">4</div><h4>良くなった音・悪くなった音</h4><p>同時に効果音が鳴ります。音が違うので、画面を見ていなくても変化に気づけます。入力ミスの発見にもつながります。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 歯の状態（インプラント） ============ -->
+<section class="alt" id="tooth">
   <div class="wrap">
     <div class="sechead">
-      <span class="en">VOICE INPUT</span>
-      <h2>音声入力のしくみ</h2>
-      <p>会話をするのではなく、<b>読み上げと画面表示で確認する</b>方式です。診療中の環境音の中でも、入った値がその場で分かります。</p>
+      <span class="en">TOOTH</span>
+      <h2>欠損だけでなく、インプラントも設定できる</h2>
+      <p>インプラントを「欠損」として扱うと、周囲の検査が記録に残りません。KOEMOはインプラントを独立して設定でき、検査表にも表示されます。</p>
     </div>
-    <div class="voicebox">
-      <div class="talk">
-        <!-- 監修者チェック待ち：発話例は実装の音声コマンド仕様に合わせて差し替え -->
-        <div class="turn dh"><div class="who">DH</div><div><div class="lbl">歯科衛生士が言う</div><div class="bub">「<b>さん、に、さん</b>」</div></div></div>
-        <div class="turn ai"><div class="who">AI</div><div><div class="lbl">KOEMO が読み上げる</div><div class="bub">右上6番 頬側 <span class="val">3・2・3</span>、次は5番</div></div></div>
-        <div class="turn dh"><div class="who">DH</div><div><div class="lbl">続けて言う</div><div class="bub">「<b>6番 近心 出血</b>」</div></div></div>
-        <div class="turn ai"><div class="who">AI</div><div><div class="lbl">KOEMO が読み上げる</div><div class="bub">右上6番 近心 <span class="val">出血あり</span></div></div></div>
-        <div class="readback">
-          <div class="spk"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></div>
-          <div style="font-size:13.5px;line-height:1.7">画面上の<b>音声入力ガイド</b>にも同じ内容が表示されます。確認方法は<b>会話</b>（AIが短く復唱）／<b>読み上げ</b>（ブラウザ音声）／<b>効果音</b>から選べます。</div>
-        </div>
+    <div class="twoshot">
+      <div>
+        <div class="ipad sm wide"><img src="img/dm_toothstate.png" alt="歯の状態の設定画面。通常・欠損・乳歯・インプラントを選んでから歯番号を連続タップする" loading="lazy"></div>
+        <div class="cap">状態を選んでから、歯番号を続けてタップ。検査表の出血と同じ操作です</div>
       </div>
       <div>
-        <div class="ipad sm"><img src="img/st_voiceguide.png" alt="音声入力ガイドのヘルプ画面。話し方の例、使える操作、フィードバック方式、注意点" loading="lazy"></div>
-        <div class="cap">音声入力ガイドのヘルプ（実際の画面）。話し方の例は「?」からいつでも確認できます</div>
+        <h4>インプラント周囲炎を、記録に残せる</h4>
+        <p>インプラントは検査表に <b>IMP</b> と表示され、欠損とは区別して測定・記録できます。メインテナンスのたびに周囲の状態を残せるので、変化に早く気づけます。</p>
+        <h4 style="margin-top:18px">必要な区分だけに絞りました</h4>
+        <p>設定できるのは<b>通常・欠損・乳歯・インプラント</b>の4つ。補綴（クラウン・インレー）の区別は歯周検査の値に影響しないため、あえて持ちません。残存乳歯は <b>A〜E</b> の表記に切り替わります。</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 比較 ============ -->
+<section id="compare">
+  <div class="wrap">
+    <div class="sechead center">
+      <span class="en">COMPARE</span>
+      <h2>好きな2回を選んで、並べて見せる</h2>
+      <p>前回との比較だけでなく、<b>任意の2回</b>を選んで上下に並べられます。検査表は横長なので、左右ではなく上下に置くことで見比べやすくしました。</p>
+    </div>
+    <div class="bigshot">
+      <div class="ipad wide"><img src="img/dm_compare.png" alt="検査の比較画面。2回の検査結果を上下2段に並べ、ポケット・出血・排膿を表示" loading="lazy"></div>
+      <div class="cap">上下2段で比較。出すのはポケット・出血・排膿の3つに絞り、患者さんへの説明にそのまま使えます</div>
+    </div>
+    <div class="steps4" style="margin-top:26px">
+      <div class="st"><div class="n">1</div><h4>一覧から2回を選ぶ</h4><p>患者の記録一覧で「比較」を押し、見たい検査を2件チェックするだけです。</p><span class="arrow">›</span></div>
+      <div class="st"><div class="n">2</div><h4>上下に並ぶ</h4><p>診療日つきで上下に表示。間隔を詰めてあるので、同じ部位を縦に追えます。</p><span class="arrow">›</span></div>
+      <div class="st"><div class="n">3</div><h4>説明に必要な項目だけ</h4><p>プラークや根分岐部は出さず、ポケット・出血・排膿に絞っています。</p><span class="arrow">›</span></div>
+      <div class="st"><div class="n">4</div><h4>そのまま印刷</h4><p>比較した状態で印刷し、お渡しすることもできます。</p></div>
     </div>
   </div>
 </section>
@@ -432,40 +484,40 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
     </div>
     <div class="fgrid">
       <div class="fcard">
-        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16M15 4v16"/></svg></div>
-        <h3>検査法を選べる</h3>
-        <p>6点法・4点法・1点法に対応。医院の算定方針や検査の目的に合わせて切り替えられます。</p>
-        <div class="tags"><span>6点法</span><span>4点法</span><span>1点法</span></div>
-      </div>
-      <div class="fcard">
-        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round"><path d="M4 12h16M12 4v16"/><circle cx="12" cy="12" r="8"/></svg></div>
-        <h3>部位・検査方向の切替</h3>
-        <p>右上・左上・右下・左下の4部位と頬側・舌側を、大きなボタンで切り替え。検査表は部位に合わせて行の並びとラベルの向きが変わります。</p>
-        <div class="tags"><span>全体／部分表示</span><span>進む方向 左右</span></div>
-      </div>
-      <div class="fcard">
-        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-        <h3>測定方向の自動送り</h3>
-        <p>入力後、カーソルが自動で次の測定点へ進みます。列の端まで連続で進む「端まで」と、1歯ごとに止まる「1本ずつ」を切り替えられ、進む向きも→／←で選べます。</p>
-        <div class="tags"><span>端まで</span><span>1本ずつ</span><span>方向 →／←</span></div>
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v10"/><path d="M9 6a3 3 0 0 1 6 0v4a3 3 0 0 1-6 0z"/><path d="M6 11a6 6 0 0 0 12 0"/></svg></div>
+        <h3>声とタップの使い分け</h3>
+        <p>ポケットと歯肉退縮量は声で連続入力。出血・排膿・プラーク・動揺度・根分岐部はタップ。読み上げは行わず、効果音と画面表示で確認します。</p>
+        <div class="tags"><span>復唱なし</span><span>タップ主体</span></div>
       </div>
       <div class="fcard">
         <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg></div>
-        <h3>前回の記録と比較</h3>
-        <p>「前回と並べる」で各項目の下に前回の行を表示し、今回の値と上下で見比べながら進められます。上部の日付タブで過去の検査にも移動できます。</p>
-        <div class="tags"><span>前回と並べる</span><span>前回値を表示</span><span>日付タブ</span></div>
+        <h3>前回値と、変化のマーク</h3>
+        <p>前回の記録が入った状態から始まり、今回入力した点だけが濃く表示されます。レンジをまたいだ変化は三角のマークと効果音で知らせます。</p>
+        <div class="tags"><span>前回値を常時表示</span><span>改善▲／悪化▼</span></div>
       </div>
       <div class="fcard">
         <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round"><path d="M12 3c3 0 5 2 5 5 0 4-2 6-2 10-1 2-2 3-3 3s-2-1-3-3c0-4-2-6-2-10 0-3 2-5 5-5z"/></svg></div>
-        <h3>歯の状態は患者ごとに</h3>
-        <p>健全・欠損・乳歯・補綴・インプラントを患者ごとに設定（複数の組み合わせも可）。設定は検査表とPDFに反映され、欠損歯には入力できないよう表示されます。</p>
-        <div class="tags"><span>乳歯切替</span><span>欠損 ✕表示</span></div>
+        <h3>インプラントも設定できる</h3>
+        <p>通常・欠損・乳歯・インプラントを患者ごとに設定。インプラントは検査表に表示され、周囲の状態を記録として残せます。</p>
+        <div class="tags"><span>IMP表示</span><span>乳歯 A〜E</span></div>
+      </div>
+      <div class="fcard">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="7" rx="1.5"/><rect x="3" y="13" width="18" height="7" rx="1.5"/></svg></div>
+        <h3>任意の2回を比較</h3>
+        <p>直前の1回だけでなく、好きな2回を選んで上下に並べられます。ポケット・出血・排膿に絞って表示し、そのまま説明に使えます。</p>
+        <div class="tags"><span>上下2段</span><span>印刷可</span></div>
       </div>
       <div class="fcard">
         <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></div>
-        <h3>表示する項目を選べる</h3>
-        <p>動揺度・根分岐部・プラーク・ポケット（出血・排膿）・退縮度から、医院で記録する項目だけを表示できます。</p>
-        <div class="tags"><span>動揺度</span><span>根分岐部</span><span>プラーク</span><span>排膿</span><span>退縮度</span></div>
+        <h3>その場で集計</h3>
+        <p>PPD平均・深さ分布・BOP・PCR に加えて、<b>PESA・PISA</b>（上皮表面積・炎症表面積）も自動で算出します。手計算は要りません。</p>
+        <div class="tags"><span>PESA</span><span>PISA</span><span>信号色</span></div>
+      </div>
+      <div class="fcard">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <h3>検査順は医院のやり方に</h3>
+        <p>まわる区画の順番と、右から／左からの向きを指定するだけ。設定した流れは図で確認でき、端まで入力すると自動で次の区画へ移ります。</p>
+        <div class="tags"><span>4区画の順番</span><span>進む向き</span></div>
       </div>
     </div>
 
@@ -473,19 +525,20 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
       <div class="sechead" style="margin-bottom:18px"><span class="en">SUMMARY</span><h2 style="font-size:22px">検査結果はその場で集計</h2></div>
       <div class="stats">
         <div class="stat"><div class="k">PPD平均</div><div class="v">2.6<small style="font-size:12px">mm</small></div><div class="d">ポケット深さの平均</div></div>
-        <div class="stat"><div class="k">深さ分布</div><div class="v">72<small style="font-size:12px">%</small></div><div class="d">1〜3mm / 4〜6mm / 7mm〜</div></div>
+        <div class="stat"><div class="k">深さ分布</div><div class="v">72<small style="font-size:12px">%</small></div><div class="d">1〜3mm / 4〜5mm / 6mm以上</div></div>
         <div class="stat"><div class="k">BOP</div><div class="v">22<small style="font-size:12px">%</small></div><div class="d">プロービング時の出血率</div></div>
         <div class="stat"><div class="k">PCR</div><div class="v">35<small style="font-size:12px">%</small></div><div class="d">プラーク付着率</div></div>
-        <div class="stat"><div class="k">PISA / PESA</div><div class="v">148<small style="font-size:12px">mm²</small></div><div class="d">炎症表面積 / 上皮表面積</div></div>
+        <div class="stat"><div class="k">PESA</div><div class="v">402<small style="font-size:12px">mm²</small></div><div class="d">歯周ポケット上皮の表面積</div></div>
+        <div class="stat"><div class="k">PISA</div><div class="v">148<small style="font-size:12px">mm²</small></div><div class="d">炎症が起きている表面積</div></div>
       </div>
-      <p style="font-size:12.5px;color:var(--hint);margin:14px 0 0">集計は入力のたびにその場で更新されます。検査表は保存のほか、<b>PDFとして出力</b>できます。</p>
+      <p style="font-size:12.5px;color:var(--hint);margin:14px 0 0">集計は入力のたびにその場で更新されます。深さ分布は<b>軽度・中等度・重度で色分け</b>されるため、患者さんに見せながら説明できます。検査表は保存のほか、<b>PDFとして出力</b>できます。</p>
       <div class="shotgrid">
         <div>
-          <div class="ipad sm"><img src="img/st_compare.png" alt="前回と並べる表示。動揺度・プラーク・ポケットの各項目の下に前回の行が並ぶ" loading="lazy"></div>
-          <div class="cap">「前回と並べる」。今回の値の下に前回の行が並び、変化をその場で確認できます</div>
+          <div class="ipad sm wide"><img src="img/dm_probing_rec.png" alt="全項目を表示した検査画面。動揺度・根分岐部・プラーク・ポケット・出血・排膿・歯肉退縮量" loading="lazy"></div>
+          <div class="cap">記録する項目は医院ごとに選べます（動揺度・根分岐部・プラーク・ポケット・出血・排膿・歯肉退縮量）</div>
         </div>
         <div>
-          <div class="pdfshot"><img src="img/st_pdf.png" alt="検査結果PDF。患者番号、検査者、検査日、歯周ポケット4mm以上の割合、BOP、上下顎の検査表、医院情報" loading="lazy"></div>
+          <div class="pdfshot"><img src="img/st_pdf.png" alt="検査結果PDF。患者番号、検査者、検査日、歯周ポケットの割合、BOP、上下顎の検査表、医院情報" loading="lazy"></div>
           <div class="cap">出力される検査結果PDF（A4）。医院情報つきで、印刷してそのままお渡しできます</div>
         </div>
       </div>
@@ -493,42 +546,42 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
   </div>
 </section>
 
-<!-- ============ 設定画面 2カラム ============ -->
+<!-- ============ 設定・患者 ============ -->
 <section id="settings">
   <div class="wrap">
     <div class="sechead">
       <span class="en">SETTING</span>
-      <h2>表示する項目と、患者ごとの歯の状態</h2>
-      <p>記録する検査項目と点数法は医院の運用に合わせて、歯の状態は患者ごとに。どちらも検査画面からそのまま開けます。</p>
+      <h2>検査の順番は、いつものやり方のままで</h2>
+      <p>まわる区画の順番と進む向きを指定するだけ。設定した流れはそのまま図になるので、迷わず確認できます。</p>
     </div>
     <div class="twoshot">
       <div>
-        <div class="ipad sm"><img src="img/st_display.png" alt="表示設定。表示する検査項目（動揺度・根分岐部・プラーク・ポケット・排膿・退縮度）とポケット点数法（6点法・4点法・1点法）" loading="lazy"></div>
-        <h4>表示設定</h4>
-        <p>表示する検査項目（動揺度・根分岐部・プラーク・ポケット・排膿・退縮度）と、ポケットの点数法（6点法／4点法／1点法）を選びます。既定のままでもすぐに始められます。</p>
+        <div class="ipad sm wide"><img src="img/dm_examset.png" alt="表示設定・検査順の画面。4区画の順番と右から/左からの指定、設定中の流れを示す上下顎のイラスト" loading="lazy"></div>
+        <div class="cap">左で順番と向きを指定すると、下のイラストの矢印と番号がそのまま変わります</div>
       </div>
       <div>
-        <div class="ipad sm"><img src="img/st_toothstate.png" alt="歯の状態の設定画面。上顎・下顎の歯をタップして健全・欠損・乳歯・補綴・インプラントを設定" loading="lazy"></div>
-        <h4>歯の状態（患者ごと）</h4>
-        <p>上顎・下顎の歯をタップして、健全・欠損・乳歯・補綴・インプラントを設定。検査表とPDFに自動で反映されます。</p>
+        <h4>4区画の順番と、進む向きだけ</h4>
+        <p>上顎頬側・上顎口蓋側・下顎頬側・下顎舌側の4区画に順番をつけ、それぞれ右から進むか左から進むかを選びます。現場にある進み方はこの2つの指定で表せます。</p>
+        <h4 style="margin-top:18px">記録する項目も選べます</h4>
+        <p>動揺度・根分岐部・プラーク・ポケット・出血・排膿・歯肉退縮量から、医院で記録する項目だけを表示。6点法・4点法・1点法にも対応します。設定は担当者ごとに保存され、次回以降も引き継がれます。</p>
       </div>
     </div>
 
     <div class="sechead" style="margin-top:52px">
       <span class="en">PATIENT</span>
-      <h2>患者と来院履歴も、同じ画面の中で</h2>
-      <p>カルテ番号・患者名・来院日で患者を探し、その場で検査を始められます。過去の検査は来院履歴からいつでも開けます。</p>
+      <h2>過去の検査は、めくらずにたどる</h2>
+      <p>患者を開くと検査結果が縦に並びます。詳細に入って戻る操作をなくし、スクロールで過去まで一気にたどれます。</p>
     </div>
     <div class="twoshot">
       <div>
-        <div class="ipad sm"><img src="img/st_home.png" alt="ホーム画面。カルテ番号・患者名・来院日で患者を検索し、患者を新規作成できる" loading="lazy"></div>
-        <h4>患者検索（ホーム）</h4>
-        <p>カルテ番号・患者名・来院日のいずれかを入れると一覧が出ます。初診の方は「患者を新規作成」からその場で登録。</p>
+        <div class="ipad sm wide"><img src="img/dm_stream.png" alt="患者詳細画面。来院ごとの検査結果が縦に並び、PPD平均・BOP・PCR・4mm以上と検査表が表示されている" loading="lazy"></div>
+        <h4>患者詳細（巻物）</h4>
+        <p>来院ごとに PPD平均・BOP・PCR・4mm以上を表示。展開すると検査表まで見られます。右には指標の推移、左には来院日のミニマップ。</p>
       </div>
       <div>
-        <div class="ipad sm"><img src="img/st_patient.png" alt="患者詳細画面。基本情報カードと来院履歴、新規セッションボタン" loading="lazy"></div>
-        <h4>患者詳細・来院履歴</h4>
-        <p>基本情報と来院履歴を一覧。「新規セッション」で本日の検査を開始し、過去の回は「検査結果」から開けます。診療メモや日時の修正もここから。</p>
+        <div class="ipad sm wide"><img src="img/dm_search.png" alt="患者検索画面。カルテ番号・患者名・来院日で検索し、最終診療日つきの結果が並ぶ" loading="lazy"></div>
+        <h4>患者検索</h4>
+        <p>カルテ番号・患者名・来院日で検索。結果には最終診療日が出るので、目的の患者をすぐ選べます。初診の方はその場で登録できます。</p>
       </div>
     </div>
 
@@ -633,8 +686,8 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
     <div class="flow">
       <div class="step"><div class="when">STEP</div><h4>お問い合わせ・デモ</h4><p>フォームまたはLINEからご連絡ください。オンラインで実際の音声入力をご覧いただけます。</p></div>
       <div class="step"><div class="when">STEP</div><h4>お申し込み・初期設定</h4><p>医院情報とオーナーアカウントを登録します。検査を担当する歯科衛生士の方のアカウントは、サポートが追加します。</p></div>
-      <div class="step"><div class="when">STEP</div><h4>表示設定</h4><p>検査画面の「表示設定」で、表示する検査項目と点数法（6点法／4点法／1点法）を医院の運用に合わせます。既定のままでもすぐに始められます。</p></div>
-      <div class="step"><div class="when">STEP</div><h4>ご利用開始</h4><p>毎月1,000クレジットの無料枠つきで、その日から音声入力をご利用いただけます。足りない分はAIクレジットをチャージ（1,000〜10,000）。</p></div>
+      <div class="step"><div class="when">STEP</div><h4>検査順・表示設定</h4><p>まわる区画の順番と進む向き、記録する検査項目と点数法を、医院の運用に合わせて設定します。既定のままでもすぐに始められます。</p></div>
+      <div class="step"><div class="when">STEP</div><h4>ご利用開始</h4><p>毎月1,000クレジットの無料枠つきで、その日からご利用いただけます。AIクレジットは音声入力に使った分のみ、足りなければチャージ（1,000〜10,000）。</p></div>
     </div>
   </div>
 </section>
@@ -702,9 +755,9 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
   </div>
   <div class="wrap">
     <div class="vscroll">
-      <div class="vcard"><p class="q">検査中に手を止めなくなった</p><p>これまでは値を言って、記録する人がもう一人必要でした。声で入るようになってから、一人で検査が完結します。読み上げで確認できるので入力ミスも減りました。</p><div class="vprof"><div class="av">A</div><div><div class="nm">歯科衛生士</div><div class="af">◯◯歯科クリニック</div></div></div></div>
+      <div class="vcard"><p class="q">検査中に手を止めなくなった</p><p>これまでは値を言って、記録する人がもう一人必要でした。ポケットは声、出血はタップと分かれているので、一人で検査が完結します。入力のたびに音が鳴るので、見なくても入ったことが分かります。</p><div class="vprof"><div class="av">A</div><div><div class="nm">歯科衛生士</div><div class="af">◯◯歯科クリニック</div></div></div></div>
       <div class="vcard"><p class="q">患者さんから目を離さずに済む</p><p>プローブを持ったまま値を口にするだけなので、視線が口腔内から外れません。患者さんも「ちゃんと見てもらえている」と感じてくれているようです。</p><div class="vprof"><div class="av">B</div><div><div class="nm">歯科衛生士</div><div class="af">◯◯デンタルオフィス</div></div></div></div>
-      <div class="vcard"><p class="q">前回値が見えるのがいい</p><p>検査表に前回の値が薄く出るので、変化に気づきながら進められます。患者さんへの説明も、その場で数字を示せるようになりました。</p><div class="vprof"><div class="av">C</div><div><div class="nm">院長</div><div class="af">◯◯歯科医院</div></div></div></div>
+      <div class="vcard"><p class="q">良くなったことが、その場で伝わる</p><p>前回の値が入った状態から始まるので、変わったところだけを直せます。改善したところに印が付くので、患者さんに「ここ、良くなりましたね」とその場で伝えられます。</p><div class="vprof"><div class="av">C</div><div><div class="nm">院長</div><div class="af">◯◯歯科医院</div></div></div></div>
       <div class="vcard"><p class="q">今の記録の仕方のまま使える</p><p>表示する項目や点数法を医院の運用に合わせられるので、記録の仕方を変えずに導入できました。iPadはチェアに置いたままです。</p><div class="vprof"><div class="av">D</div><div><div class="nm">院長</div><div class="af">◯◯ファミリー歯科</div></div></div></div>
     </div>
     <div style="padding:0 22px"><a class="morelink" href="#">導入事例をもっと見る →</a></div>
@@ -739,8 +792,10 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
   <div class="wrap" style="max-width:880px">
     <div class="sechead center"><span class="en">FAQ</span><h2>よくあるご質問</h2></div>
     <details class="faq" open><summary><span class="qm">Q</span>専用の機器を購入する必要はありますか？<span class="mk">＋</span></summary><div class="ans">いいえ。KOEMOはブラウザで動作するため、お手持ちのiPadまたはPCからご利用いただけます。チェアに設置された端末でも、1人1台の運用でもお使いいただけます。マイクは端末内蔵のものでご利用いただけます。</div></details>
-    <details class="faq"><summary><span class="qm">Q</span>診療中の環境音があっても、音声は認識されますか？<span class="mk">＋</span></summary><div class="ans">入力された値は読み上げと画面表示で必ず確認できる設計です。認識が違っていた場合は、そのまま言い直すか、テンキーから手入力で修正できます。導入前のデモで、実際の診療環境に近い状態でお試しいただくことをおすすめしています。</div></details>
-    <details class="faq"><summary><span class="qm">Q</span>今使っている検査の順番（流れ）のまま使えますか？<span class="mk">＋</span></summary><div class="ans">部位（右上・左上・右下・左下）・面（頬側・舌側）・進む向きは自由に切り替えられ、列の端まで連続で進む「端まで」と1歯ごとに止まる「1本ずつ」を選べます。6点法・4点法・1点法にも対応しています。</div></details>
+    <details class="faq"><summary><span class="qm">Q</span>診療中の環境音があっても、音声は認識されますか？<span class="mk">＋</span></summary><div class="ans">声で入れるのはポケットと歯肉退縮量に絞っており、入った値は画面表示と効果音で確認できます。認識が違っていた場合は、そのまま言い直すか、テンキーから手入力で修正できます。出血・排膿・プラークなどはタップで入力するため、音声認識の影響を受けません。導入前のデモで、実際の診療環境に近い状態でお試しいただくことをおすすめしています。</div></details>
+    <details class="faq"><summary><span class="qm">Q</span>今使っている検査の順番（流れ）のまま使えますか？<span class="mk">＋</span></summary><div class="ans">はい。まわる区画（上顎頬側・上顎口蓋側・下顎頬側・下顎舌側）の順番と、それぞれ右から進むか左から進むかを指定できます。設定した流れは図で確認でき、端まで入力すると自動で次の区画へ移ります。設定は担当者ごとに保存され、次回以降も引き継がれます。6点法・4点法・1点法にも対応しています。</div></details>
+    <details class="faq"><summary><span class="qm">Q</span>インプラントの周囲も検査できますか？<span class="mk">＋</span></summary><div class="ans">はい。歯の状態で「インプラント」を独立して設定でき、検査表にも表示されます。欠損として扱う必要がないため、インプラント周囲の状態をメインテナンスのたびに記録として残せます。</div></details>
+    <details class="faq"><summary><span class="qm">Q</span>過去の検査と見比べることはできますか？<span class="mk">＋</span></summary><div class="ans">患者を開くと検査結果が縦に並び、スクロールで過去までたどれます。さらに「比較」から<b>任意の2回</b>を選ぶと、上下に並べて表示できます。比較にはポケット・出血・排膿を表示し、そのまま印刷してお渡しすることもできます。</div></details>
     <details class="faq"><summary><span class="qm">Q</span>AIクレジットはどのくらい使いますか？<span class="mk">＋</span></summary><div class="ans">音声入力による検査1回（約5分）で80〜100クレジット程度が目安です。毎月1,000クレジットの無料枠が付与されるため、月10回程度の検査は無料枠内でお試しいただけます。使用量はAIクレジット画面の利用状況で確認できます。</div></details>
     <details class="faq"><summary><span class="qm">Q</span>AIクレジットを使い切ると、検査できなくなりますか？<span class="mk">＋</span></summary><div class="ans">音声入力はご利用いただけなくなりますが、テンキーからの手入力での検査記録は継続してご利用いただけます。残高が少なくなった段階でメールにて通知いたします。</div></details>
     <details class="faq"><summary><span class="qm">Q</span>書類の作成や患者説明の機能はいつ使えますか？<span class="mk">＋</span></summary><div class="ans">書類生成・患者説明（コンサル）・患者用アプリは順次公開を予定しています。公開時期は本サイトのアップデート情報でお知らせします。いずれも現在の契約の中に追加されていく形です。</div></details>
@@ -754,7 +809,7 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
 <section id="contact">
   <div class="wrap">
     <div class="cta">
-      <h2>実際の音声入力を、デモでご覧ください</h2>
+      <h2>実際の画面を、デモでご覧ください</h2>
       <p>オンラインでのデモを実施しています。導入のご相談・お見積りもお気軽にどうぞ。</p>
       <div class="btns"><a class="btn lg" href="#">お問い合わせ・デモ依頼</a><a class="btn lg line" href="#">LINEで相談する</a></div>
     </div>
@@ -770,7 +825,7 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
   <div class="wrap">
     <div class="fgrid2">
       <div><a href="#" class="logo">KOEMO<span class="dot">.</span></a><p class="fdesc">プロービング検査を、声で記録する。歯科衛生士のためのクラウドサービスです。検査から説明・書類・お渡しまで、順に広げていきます。</p></div>
-      <div><h5>SERVICE</h5><ul><li><a href="#probing">プロービング検査</a></li><li><a href="#voice-input">音声入力のしくみ</a></li><li><a href="#settings">検査設定</a></li><li><a href="#roadmap">今後の機能</a></li><li class="soon-li">書類生成<small>SOON</small></li><li class="soon-li">患者説明<small>SOON</small></li><li class="soon-li">患者用アプリ<small>SOON</small></li></ul></div>
+      <div><h5>SERVICE</h5><ul><li><a href="#probing">入力の使い分け</a></li><li><a href="#change">前回との変化</a></li><li><a href="#tooth">歯の状態</a></li><li><a href="#compare">検査の比較</a></li><li><a href="#settings">検査順・表示設定</a></li><li><a href="#roadmap">今後の機能</a></li><li class="soon-li">書類生成<small>SOON</small></li><li class="soon-li">患者説明<small>SOON</small></li><li class="soon-li">患者用アプリ<small>SOON</small></li></ul></div>
       <div><h5>SUPPORT</h5><ul><li><a href="#flow">導入の流れ</a></li><li><a href="#price">料金</a></li><li><a href="#faq">よくあるご質問</a></li><li><a href="#">アップデート情報</a></li><li><a href="#">障害・メンテナンス情報</a></li></ul></div>
       <div><h5>COMPANY</h5><ul><li><a href="#contact">お問い合わせ</a></li><li><a href="#">運営会社</a></li><li><a href="#">利用規約</a></li><li><a href="#">個人情報保護方針</a></li><li><a href="#">特定商取引法に基づく表記</a></li></ul></div>
     </div>
