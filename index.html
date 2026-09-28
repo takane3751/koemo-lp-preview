@@ -26,7 +26,6 @@ a{color:var(--purple-d);text-decoration:none}
 header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
 .hbar{max-width:var(--maxw);margin:0 auto;padding:12px 22px;display:flex;align-items:center;gap:22px}
 .logo{display:flex;align-items:baseline;gap:2px;font-weight:800;font-size:23px;letter-spacing:.02em;color:var(--purple-d);flex:none}
-.logo .dot{color:var(--purple);font-size:26px;line-height:0}
 .logo small{font-size:10px;font-weight:600;color:var(--hint);margin-left:5px;letter-spacing:.14em}
 nav.gnav{display:flex;gap:18px;font-size:13.5px;margin-left:6px}
 nav.gnav a{color:var(--text);white-space:nowrap;padding:4px 0;border-bottom:2px solid transparent}
@@ -199,6 +198,17 @@ table.ptable thead th{background:var(--lav2);font-size:12.5px;font-weight:700;co
 table.ptable tbody tr:last-child td{border-bottom:none}
 table.ptable td.r{text-align:right;font-weight:700;white-space:nowrap}
 .pnotes{margin:16px 0 0;padding-left:20px;font-size:12px;color:var(--hint);line-height:1.95}
+/* キャンペーン（build_pages.py の CAMPAIGN で body.campaign を付け外し） */
+body:not(.campaign) .camp-only{display:none!important}
+.camp{display:flex;gap:16px;align-items:center;background:linear-gradient(90deg,#EEEDFE,#F7F6FF);border:1.5px solid var(--purple);border-radius:var(--radius);padding:18px 22px;margin-bottom:22px}
+.camp .ct{flex:none;background:var(--purple);color:#fff;font-size:11px;font-weight:800;letter-spacing:.08em;padding:4px 12px;border-radius:999px}
+.camp b{color:var(--purple-d)}
+.camp p{margin:0;font-size:13.5px;line-height:1.8;color:var(--text)}
+.camp small{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
+.pcard .pcamp{display:inline-block;margin-top:8px;background:var(--purple);color:#fff;font-size:11.5px;font-weight:700;padding:3px 11px;border-radius:999px}
+.pcard .price .was{font-size:11px;font-weight:700;color:var(--hint);margin:0 6px 0 0}
+.hero-note .camp-only{color:var(--purple-d);font-weight:700}
+@media(max-width:720px){.camp{flex-direction:column;align-items:flex-start}}
 .draft{display:inline-flex;align-items:center;gap:6px;background:#FFF6E5;border:1px solid #F0DCB0;color:#8A6320;font-size:11.5px;font-weight:700;padding:5px 13px;border-radius:999px;margin-bottom:16px}
 
 /* ---------- VOICE ---------- */
@@ -290,7 +300,7 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
 @media(max-width:900px){.shotgrid{grid-template-columns:1fr}}
 </style>
 </head>
-<body>
+<body class="campaign">
 
 <!-- ============ 歯科医療従事者 確認モーダル ============ -->
 <div id="gate">
@@ -308,7 +318,7 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
 <!-- ============ ヘッダー ============ -->
 <header>
   <div class="hbar">
-    <a href="#" class="logo">KOEMO<span class="dot">.</span><small>コエモ</small></a>
+    <a href="#" class="logo">KOEMO<small>コエモ</small></a>
     <nav class="gnav">
       <a href="#why">変わること</a>
       <a href="#probing">入力のしかた</a>
@@ -332,7 +342,7 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
     <div>
       <span class="pill-now"><i></i>第1弾リリース：プロービング検査</span>
       <h1 class="hero-t">プロービング検査を、<br><span class="hl">止めずに</span>終える。</h1>
-      <p class="lead">前回の記録が入った状態から始まるので、入力するのは<b>変わったところだけ</b>。操作はどの項目も「選んでから、続けてタップ」で共通です。手が塞がる場面では、ポケットと歯肉退縮量を声でも入れられます。歯科衛生士のためのクラウドサービスです。</p>
+      <p class="lead">いちばん手間がかかる<b>初回の検査は、声で流れのまま</b>入力。<b>2回目からは前回の値を引き継いで、タップだけで素早く</b>。前回より良くなったところ・悪くなったところも、その場で分かります。歯科衛生士のためのクラウドサービスです。</p>
       <div class="hero-btns">
         <a class="btn primary lg" href="#contact">お問い合わせ・デモ依頼</a>
         <a class="btn lg" href="#probing">画面を見る</a>
@@ -340,7 +350,8 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
       <div class="hero-note">
         <span>◆ iPad・PCのブラウザで動作</span>
         <span>◆ 専用機器・初期費用なし</span>
-        <span>◆ 前回値が入った状態から始まる</span>
+        <span>◆ 初回は声、2回目からはタップ</span>
+        <span class="camp-only">◆ 書類生成の公開まで、基本利用料・プロービング検査・ストレージは無料</span>
       </div>
     </div>
     <div>
@@ -368,12 +379,12 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
         <h2>プロービング検査、<br>こんな場面はありませんか</h2>
       </div>
       <ul class="plist">
-        <li><b>前回と同じ値も、毎回ゼロから入れ直している</b><span>入力が速いツールでも、入れる点の数は変わりません。変わっていない点まで触るぶん、検査は長くなります。</span></li>
+        <li><b>初回の検査は、全部の歯をタップで入れるしかない</b><span>タップ式のアプリは、2回目以降こそ前回の値を引き継げて楽ですが、初回は6点法なら全顎で160点以上をひとつずつタップすることになります。</span></li>
         <li><b>項目ごとに操作が違って、そのたびに一拍止まる</b><span>ポケット、出血、排膿、プラーク。入れ方が項目ごとに違うと、慣れていても手が止まります。</span></li>
         <li><b>記録は残るのに、「良くなったか」はその場で分からない</b><span>数字は並んでいても、どこが改善しどこが悪化したかは、前回と見比べないと気づけません。</span></li>
         <li><b>紙に書いている場合は、そのぶん手と目が患者さんから離れる</b><span>記録役をもう一人つけている医院もあります。あとからの書き写しや、読み違いのやり直しも残ります。</span></li>
       </ul>
-      <div class="answer">KOEMOは、<b>前回の記録が入った状態から始まります。</b><small>今回入力するのは、変わったところだけ。操作はどの項目も「選んでから、続けてタップ」で共通です。ポケットと歯肉退縮量は、手が塞がる場面で声でも入れられます。</small></div>
+      <div class="answer">KOEMOは、<b>初回は声で、2回目からはタップで。</b><small>初回はポケットと歯肉退縮量を「3、2、3」と言うだけで流れのまま入力。2回目以降は前回の値を引き継いだ検査表から、変わったところをタップで直すだけ。前回より良くなった・悪くなったも、その場で分かります。</small></div>
     </div>
   </div>
 </section>
@@ -383,31 +394,31 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
   <div class="wrap">
     <div class="sechead center">
       <span class="en">WHY KOEMO</span>
-      <h2>すでにタップで入力できている方にこそ、<br>使っていただきたい</h2>
-      <p>タップ式の検査アプリですでにサクサク入力できている方から見れば、入力そのものはもう十分に速いはずです。KOEMOが短くするのは一打の速さではなく、<b>入力する点の数</b>と、<b>検査を終えたあとに残る仕事</b>です。</p>
+      <h2>初回は声で、2回目からはタップで</h2>
+      <p>前回の値を引き継げるタップ式のアプリは、2回目以降の検査をすでに楽にしています。手間が残っているのは、<b>全部の歯をタップで入れる初回の検査</b>です。KOEMOは初回を声で、2回目以降をタップで入力でき、<b>前回からの変化</b>もその場で示します。</p>
     </div>
     <div class="fgrid">
       <div class="fcard">
         <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h8M4 12h8M4 17h5"/><path d="M15 15l2.5 2.5L22 13"/></svg></div>
-        <h3>入力する点そのものが減る</h3>
-        <p>前回の記録が入った状態で検査表が開きます。変わっていない点は触らなくてよいので、タップの回数が減ります。速く入力するのではなく、入力する数を減らすという考え方です。</p>
-        <div class="tags"><span>前回値から開始</span><span>触るのは変化点だけ</span></div>
+        <h3>初回は、声で流れのまま</h3>
+        <p>測った値を「3、2、3」と続けて言うだけで、カーソルが次の測定点へ進みます。全部の歯のポケットと歯肉退縮量を、1点ずつタップせずに入力できます。</p>
+        <div class="tags"><span>初回の検査に</span><span>ポケット・歯肉退縮量</span></div>
       </div>
       <div class="fcard">
         <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg></div>
-        <h3>どの項目も操作が同じ</h3>
-        <p>「項目を選んでから、続けてタップ」。ポケットも出血も排膿も、歯の状態の設定まで同じ操作です。項目ごとに入れ方を覚え直す必要がなく、新しく入ったスタッフにもそのまま教えられます。</p>
-        <div class="tags"><span>モード選択→連続タップ</span><span>全画面で共通</span></div>
+        <h3>2回目からは、タップで素早く</h3>
+        <p>前回の値を引き継いだ検査表から始まり、変わったところだけタップで直します。操作はどの項目も「選んでから、続けてタップ」で共通なので、項目ごとに入れ方を覚え直す必要もありません。</p>
+        <div class="tags"><span>前回値を引き継ぐ</span><span>操作は全項目で共通</span></div>
       </div>
       <div class="fcard">
         <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V11M10 19V5M16 19v-6M22 19H2"/></svg></div>
-        <h3>検査したあとの仕事が減る</h3>
-        <p>集計は入力のたびに更新され、深さの分布は信号色。改善・悪化はマークと音でその場に出ます。任意の2回を並べた比較やPDFもそのまま出せるので、説明用に作り直す手間が要りません。</p>
-        <div class="tags"><span>PESA・PISAも自動</span><span>比較・PDF</span></div>
+        <h3>良くなった・悪くなったが分かる</h3>
+        <p>重症度のレンジをまたいだ点に、改善・悪化のマークがつき、効果音も鳴り分けます。集計は入力のたびに更新され、2回を並べた比較やPDFもそのまま出せます。</p>
+        <div class="tags"><span>改善▲／悪化▼</span><span>PESA・PISAも自動</span></div>
       </div>
     </div>
     <div class="whynote">
-      ◆ <b>手が塞がる場面だけ、声に逃がせます。</b>ポケットと歯肉退縮量は声でも入力できます。基本はタップのままで、使うかどうかはその場で選べます。<br>
+      ◆ <b>声を使うかどうかは、その場で選べます。</b>2回目以降でも、手が塞がる場面ではポケットと歯肉退縮量を声で入れられます。<br>
       ◆ <b>紙で記録している医院なら、記録役をもう一人つける必要がなくなります。</b>書き写しがなくなり、検査順や記録する項目は今のやり方のまま設定できます。
     </div>
   </div>
@@ -418,8 +429,8 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
   <div class="wrap">
     <div class="sechead center">
       <span class="en">INPUT</span>
-      <h2>基本はタップ。手が塞がるところだけ、声。</h2>
-      <p>どの項目も「選んでから、続けてタップ」で入ります。声で入れられるのは<b>ポケットと歯肉退縮量</b>で、使うかどうかはその場で選べます。</p>
+      <h2>初回は声で流れのまま、2回目からはタップで。</h2>
+      <p>声で入れられるのは<b>ポケットと歯肉退縮量</b>。点数の多い初回の検査は声で、前回の値を引き継ぐ2回目以降はタップで。どちらを使うかはその場で選べます。</p>
     </div>
 
     <div class="bigshot">
@@ -453,7 +464,7 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
     <div class="sechead center">
       <span class="en">CHANGE</span>
       <h2>前回から何が変わったか、その場で分かる</h2>
-      <p>前回値が入った状態から始まるので、入力するのは<b>変わったところだけ</b>。触った点だけが濃く表示され、重症度のレンジをまたいだ変化は、マークと音で知らせます。</p>
+      <p>2回目以降は前回の値を引き継いだ検査表から始まります。今回入力した点だけが濃く表示され、重症度のレンジをまたいだ変化は、<b>マークと音</b>で知らせます。</p>
     </div>
 
     <div class="bigshot">
@@ -462,7 +473,7 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
     </div>
 
     <div class="steps4" style="margin-top:28px">
-      <div class="st"><div class="n">1</div><h4>前回値から始まる</h4><p>ポケットも出血もプラークも、前回の記録が入った状態で開きます。同じままの点は触らなくてよいので、入力そのものが減ります。</p><span class="arrow">›</span></div>
+      <div class="st"><div class="n">1</div><h4>前回の値を引き継ぐ</h4><p>ポケットも出血もプラークも、前回の記録が入った状態で開きます。変わったところだけタップで直します。</p><span class="arrow">›</span></div>
       <div class="st"><div class="n">2</div><h4>今回の入力だけ濃くなる</h4><p>触っていない点は薄いグレーのまま。「前回から入っていた」と「今回入れた」が一目で分かります。</p><span class="arrow">›</span></div>
       <div class="st"><div class="n">3</div><h4>レンジをまたぐと印がつく</h4><p>軽度→中等度→重度のレンジを越えたときだけ、<b>改善は青緑の上向き三角</b>、<b>悪化は赤の下向き三角</b>を数字の上に表示します。</p><span class="arrow">›</span></div>
       <div class="st"><div class="n">4</div><h4>良くなった音・悪くなった音</h4><p>同時に効果音が鳴ります。音が違うので、画面を見ていなくても変化に気づけます。入力ミスの発見にもつながります。</p></div>
@@ -486,8 +497,8 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
       <div>
         <h4>インプラント周囲炎を、記録に残せる</h4>
         <p>インプラントは検査表に <b>IMP</b> と表示され、欠損とは区別して測定・記録できます。メインテナンスのたびに周囲の状態を残せるので、変化に早く気づけます。</p>
-        <h4 style="margin-top:18px">必要な区分だけに絞りました</h4>
-        <p>設定できるのは<b>通常・欠損・乳歯・インプラント</b>の4つ。補綴（クラウン・インレー）の区別は歯周検査の値に影響しないため、あえて持ちません。残存乳歯は <b>A〜E</b> の表記に切り替わります。</p>
+        <h4 style="margin-top:18px">乳歯も設定できます</h4>
+        <p>設定できるのは<b>通常・欠損・乳歯・インプラント</b>の4つ。残存乳歯は <b>A〜E</b> の表記に切り替わります。</p>
       </div>
     </div>
   </div>
@@ -498,8 +509,8 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
   <div class="wrap">
     <div class="sechead center">
       <span class="en">COMPARE</span>
-      <h2>好きな2回を選んで、並べて見せる</h2>
-      <p>前回との比較だけでなく、<b>任意の2回</b>を選んで上下に並べられます。検査表は横長なので、左右ではなく上下に置くことで見比べやすくしました。</p>
+      <h2>2回の検査を、並べて比較できる</h2>
+      <p>前回との比較だけでなく、過去の検査から2回を選んで<b>上下に並べて比較</b>できます。検査表は横長なので、左右ではなく上下に置くことで見比べやすくしました。</p>
     </div>
     <div class="bigshot">
       <div class="ipad"><img src="img/dm_compare.png" alt="検査の比較画面。2回の検査結果を上下2段に並べ、表示する検査項目のボタンで出す行を切り替えられる" loading="lazy"></div>
@@ -524,15 +535,15 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
     <div class="fgrid">
       <div class="fcard">
         <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v10"/><path d="M9 6a3 3 0 0 1 6 0v4a3 3 0 0 1-6 0z"/><path d="M6 11a6 6 0 0 0 12 0"/></svg></div>
-        <h3>タップが基本、声は選べる</h3>
-        <p>どの項目も「選んでから、続けてタップ」で共通。ポケットと歯肉退縮量は声でも入力でき、使うかどうかはその場で選べます。入った値は効果音と画面表示で確認します。</p>
-        <div class="tags"><span>操作は全項目で共通</span><span>声はポケット・歯肉退縮量</span></div>
+        <h3>声でも、タップでも</h3>
+        <p>ポケットと歯肉退縮量は声で入力でき、初回の検査も流れのまま進められます。タップはどの項目も「選んでから、続けてタップ」で共通。入った値は効果音と画面表示で確認します。</p>
+        <div class="tags"><span>声はポケット・歯肉退縮量</span><span>操作は全項目で共通</span></div>
       </div>
       <div class="fcard">
         <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg></div>
-        <h3>前回値から始まる</h3>
-        <p>前回の記録が入った状態で開き、今回入力した点だけが濃く表示されます。入力するのは変わったところだけ。レンジをまたいだ変化は三角のマークと効果音で知らせます。</p>
-        <div class="tags"><span>入力するのは変化点だけ</span><span>改善▲／悪化▼</span></div>
+        <h3>前回からの変化が分かる</h3>
+        <p>2回目以降は前回の値を引き継いで開き、今回入力した点だけが濃く表示されます。レンジをまたいだ変化は三角のマークと効果音で知らせます。</p>
+        <div class="tags"><span>前回値を引き継ぐ</span><span>改善▲／悪化▼</span></div>
       </div>
       <div class="fcard">
         <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round"><path d="M12 3c3 0 5 2 5 5 0 4-2 6-2 10-1 2-2 3-3 3s-2-1-3-3c0-4-2-6-2-10 0-3 2-5 5-5z"/></svg></div>
@@ -542,8 +553,8 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
       </div>
       <div class="fcard">
         <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="7" rx="1.5"/><rect x="3" y="13" width="18" height="7" rx="1.5"/></svg></div>
-        <h3>任意の2回を比較</h3>
-        <p>直前の1回だけでなく、好きな2回を選んで上下に並べられます。ポケット・出血・排膿に絞って表示し、そのまま説明に使えます。</p>
+        <h3>2回を並べて比較</h3>
+        <p>直前の1回だけでなく、過去の検査から2回を選んで上下に並べて比較できます。ポケット・出血・排膿に絞って表示し、そのまま説明に使えます。</p>
         <div class="tags"><span>上下2段</span><span>印刷可</span></div>
       </div>
       <div class="fcard">
@@ -723,7 +734,7 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
       <p>専用機器の設置は不要です。お手持ちのiPadまたはPCのブラウザからご利用いただけます。</p>
     </div>
     <div class="flow">
-      <div class="step"><div class="when">STEP</div><h4>お問い合わせ・デモ</h4><p>フォームまたはLINEからご連絡ください。オンラインで実際の音声入力をご覧いただけます。</p></div>
+      <div class="step"><div class="when">STEP</div><h4>お問い合わせ・デモ</h4><p>メールまたはLINE公式アカウントからご連絡ください。オンラインで実際の音声入力をご覧いただけます。</p></div>
       <div class="step"><div class="when">STEP</div><h4>お申し込み・初期設定</h4><p>医院情報とオーナーアカウントを登録します。検査を担当する歯科衛生士の方のアカウントは、サポートが追加します。</p></div>
       <div class="step"><div class="when">STEP</div><h4>検査順・表示設定</h4><p>まわる区画の順番と進む向き、記録する検査項目と点数法を、医院の運用に合わせて設定します。既定のままでもすぐに始められます。</p></div>
       <div class="step"><div class="when">STEP</div><h4>ご利用開始</h4><p>毎月1,000クレジットの無料枠つきで、その日からご利用いただけます。AIクレジットは音声入力に使った分のみ、足りなければチャージ（1,000〜10,000）。</p></div>
@@ -734,53 +745,63 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
 <!-- ============ PRICE ============ -->
 <section id="price">
   <!-- EDITION: probing（プロービング版の料金）。完全版では「ベース＋プラグインごとの月額」に書き直す（サービスサイト/README.md §2）
-       金額は _tools/build_pages.py の PRICES で管理（data-price の中身はスクリプトが入れる） -->
+       金額は _tools/build_pages.py の PRICES、キャンペーンの表示は CAMPAIGN で管理（data-price の中身・body.campaign はスクリプトが入れる） -->
   <div class="wrap">
     <div class="sechead">
       <span class="en">PRICE</span>
       <h2>料金</h2>
-      <p>基本利用料とプロービング検査の利用料は、月額の定額です。スタッフの人数による追加料金はありません。音声入力などAIの利用料だけ、使った分をチャージ式でお支払いいただきます。</p>
+      <p>基本利用料とプロービング検査の利用料は、月額の定額です。スタッフの人数による追加料金はありません。音声入力などAIの利用料だけ、使った分をチャージ式でお支払いいただきます。ストレージは一定の容量まで基本利用料に含みます。</p>
+    </div>
+    <div class="camp camp-only">
+      <span class="ct">CAMPAIGN</span>
+      <p><b>書類生成機能の公開まで、基本利用料・プロービング検査・ストレージは無料です。</b>お支払いいただくのは、音声入力などで使ったAIクレジットの実費だけです。<small>キャンペーンの終了は1か月前までにお知らせします。終了後も続けてご利用いただく場合に限り、通常の料金がかかります。</small></p>
     </div>
     <div class="draft" data-price-draft>◆ 金額は未確定です（_tools/build_pages.py の PRICES に入れて再生成すると反映されます）</div>
     <div class="psum">
       <div class="pcard">
         <div class="ptitle">基本利用料</div>
-        <div class="pdesc">患者の管理とスタッフの登録</div>
-        <div class="price"><span data-price="base">¥○,○○○</span><small>／月</small></div>
+        <div class="pdesc">患者の管理とスタッフの登録・ストレージ</div>
+        <div class="price"><small class="was camp-only">通常</small><span data-price="base">¥○,○○○</span><small>／月</small></div>
         <div class="pnote">税込・初期費用なし</div>
-        <ul><li>患者の検索・患者詳細（検査の履歴）</li><li>検査結果の保存・比較・PDF出力</li><li>スタッフは人数に関係なく登録できます</li><li>今後の機能はプラグインとして追加</li></ul>
+        <span class="pcamp camp-only">キャンペーン中は無料</span>
+        <ul><li>患者の検索・患者詳細（検査の履歴）</li><li>検査結果の保存・比較・PDF出力</li><li>スタッフは人数に関係なく登録できます</li><li>一定の容量までのストレージを含みます</li><li>今後の機能はプラグインとして追加</li></ul>
       </div>
       <div class="pcard hi">
         <span class="badge">定額</span>
         <div class="ptitle">プロービング検査</div>
         <div class="pdesc">検査の入力・集計・前回との比較</div>
-        <div class="price"><span data-price="probing">¥○,○○○</span><small>／月</small></div>
+        <div class="price"><small class="was camp-only">通常</small><span data-price="probing">¥○,○○○</span><small>／月</small></div>
         <div class="pnote">税込・人数による追加料金なし</div>
-        <ul><li>タップ入力と音声入力（ポケット・歯肉退縮量）</li><li>前回の記録から始まる入力・改善／悪化の表示</li><li>担当者ごとの検査順・表示設定</li><li>歯の状態（欠損・乳歯・インプラント）</li></ul>
+        <span class="pcamp camp-only">キャンペーン中は無料</span>
+        <ul><li>音声入力（ポケット・歯肉退縮量）とタップ入力</li><li>前回値の引き継ぎ・改善／悪化の表示</li><li>担当者ごとの検査順・表示設定</li><li>歯の状態（欠損・乳歯・インプラント）</li></ul>
       </div>
       <div class="pcard">
         <div class="ptitle">AIクレジット<span style="font-size:12px;color:var(--muted);font-weight:600;margin-left:6px">従量</span></div>
         <div class="pdesc">音声入力などAIの処理で消費します</div>
         <div class="price">¥1,000<small>／1,000クレジット</small></div>
         <div class="pnote">1クレジット＝1円相当・毎月無料枠あり</div>
-        <ul><li>チャージ式（前払い）・1,000／3,000／5,000／10,000から選択</li><li>毎月1,000クレジットの無料枠</li><li>残高500クレジット未満でメール通知</li><li>利用状況の履歴を画面で確認</li></ul>
+        <span class="pcamp camp-only">キャンペーン中も実費</span>
+        <ul><li>チャージ式（前払い）・1,000／3,000／5,000／10,000から選択</li><li>チャージした分は翌月以降に繰り越せます</li><li>毎月1,000クレジットの無料枠（繰り越しなし）</li><li>残高500クレジット未満でメール通知</li><li>利用状況の履歴を画面で確認</li></ul>
       </div>
     </div>
     <table class="ptable">
       <thead><tr><th>項目</th><th>内容</th><th style="text-align:right">料金</th></tr></thead>
       <tbody>
         <tr><td>初期費用</td><td>アカウント開設・初期設定</td><td class="r">無料</td></tr>
-        <tr><td>基本利用料</td><td>患者の管理・スタッフの登録・検査結果の保存と出力</td><td class="r"><span data-price="base">¥○,○○○</span>／月</td></tr>
-        <tr><td>プロービング検査</td><td>検査の入力・集計・比較・担当者ごとの設定</td><td class="r"><span data-price="probing">¥○,○○○</span>／月</td></tr>
+        <tr><td>基本利用料</td><td>患者の管理・スタッフの登録・検査結果の保存と出力</td><td class="r"><span data-price="base">¥○,○○○</span>／月<span class="camp-only"><br>キャンペーン中は無料</span></td></tr>
+        <tr><td>プロービング検査</td><td>検査の入力・集計・比較・担当者ごとの設定</td><td class="r"><span data-price="probing">¥○,○○○</span>／月<span class="camp-only"><br>キャンペーン中は無料</span></td></tr>
         <tr><td>スタッフの追加</td><td>人数に関係なく登録できます</td><td class="r">追加料金なし</td></tr>
-        <tr><td>AIクレジット</td><td>1,000／3,000／5,000／10,000クレジットから選択</td><td class="r">1クレジット＝¥1</td></tr>
+        <tr><td>ストレージ</td><td>一定の容量までは基本利用料に含みます。超えた分は使用量に応じて毎月</td><td class="r"><span data-price="storage">容量・料金は決まり次第掲載</span><span class="camp-only"><br>キャンペーン中は無料</span></td></tr>
+        <tr><td>AIクレジット</td><td>1,000／3,000／5,000／10,000クレジットから選択。チャージした分は翌月以降に繰り越し可</td><td class="r">1クレジット＝¥1</td></tr>
         <tr><td>月次無料クレジット</td><td>全医院一律・毎月付与（繰り越しなし）</td><td class="r">1,000クレジット</td></tr>
       </tbody>
     </table>
     <ul class="pnotes">
       <li>表示価格はすべて税込です。</li>
       <li>AIクレジットは、実行した機能で使用した処理量に応じて消費されます。音声入力による検査1回（約5分）で80〜100クレジット程度が目安です。</li>
-      <li>チャージしたAIクレジットの有効期限は、チャージした日から12か月です。詳しくは<a href="terms.html">利用規約</a>をご確認ください。</li>
+      <li>毎月の無料枠が先に使われ、足りない分をチャージしたクレジットから使います。無料枠の残りは翌月に繰り越しません。チャージしたクレジットは、チャージした日から12か月のあいだ繰り越してお使いいただけます。詳しくは<a href="terms.html">利用規約</a>をご確認ください。</li>
+      <li>ストレージは、検査結果・画像などの保存に使う容量です。基本利用料に含む容量と、超えた場合の料金は決まり次第このページでお知らせします。</li>
+      <li class="camp-only">キャンペーンは書類生成機能の公開までの予定です。終了する場合は1か月前までにメール・本サイトでお知らせし、終了後も続けてご利用いただく場合に通常の料金がかかります。AIクレジットはキャンペーン中も実費です。</li>
       <li>今後公開予定の機能（書類生成・患者説明・患者用アプリ）は、プラグインとして追加できるようにする予定です。料金は公開時にお知らせします。</li>
     </ul>
   </div>
@@ -816,18 +837,20 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
 <section class="alt" id="faq">
   <div class="wrap" style="max-width:880px">
     <div class="sechead center"><span class="en">FAQ</span><h2>よくあるご質問</h2></div>
-    <details class="faq" open><summary><span class="qm">Q</span>すでにタップ式の検査アプリを使っています。変える意味はありますか？<span class="mk">＋</span></summary><div class="ans">KOEMOが短くするのは入力の一打ではなく、<b>入力する点の数</b>です。前回の記録が入った状態から検査表が開くので、変わっていない点は触りません。操作はどの項目も「選んでから、続けてタップ」で共通のため、項目ごとに入れ方を覚え直す必要もありません。あわせて、集計・改善／悪化の表示・任意の2回の比較・PDFがその場で出るので、検査を終えてから説明用に作り直す作業も減らせます。検査順や記録する項目は、今の運用のまま設定できます。</div></details>
+    <details class="faq" open><summary><span class="qm">Q</span>すでにタップ式の検査アプリを使っています。変える意味はありますか？<span class="mk">＋</span></summary><div class="ans">いちばん違いが出るのは<b>初回の検査</b>です。タップ式のアプリでは初回に全部の歯をタップで入れる必要がありますが、KOEMOはポケットと歯肉退縮量を声で、流れのまま入力できます。2回目以降は前回の値を引き継いだ検査表から、変わったところをタップで直すだけ。レンジをまたいだ改善・悪化はマークと効果音でその場に出ます。集計・2回の比較・PDFもそのまま出せ、検査順や記録する項目は今の運用のまま設定できます。</div></details>
     <details class="faq"><summary><span class="qm">Q</span>紙に記録しています。いきなり切り替えられますか？<span class="mk">＋</span></summary><div class="ans">はい。まわる区画の順番と進む向き、記録する検査項目と点数法を、今のやり方に合わせて設定できます。記録の手順を変えずに置き換えられるかたちです。記録役をもう一人つける必要がなくなり、書き写しもなくなります。検査結果はPDFで出力でき、印刷してそのままお渡しいただけます。</div></details>
     <details class="faq"><summary><span class="qm">Q</span>専用の機器を購入する必要はありますか？<span class="mk">＋</span></summary><div class="ans">いいえ。KOEMOはブラウザで動作するため、お手持ちのiPadまたはPCからご利用いただけます。チェアに設置された端末でも、1人1台の運用でもお使いいただけます。マイクは端末内蔵のものでご利用いただけます。</div></details>
     <details class="faq"><summary><span class="qm">Q</span>診療中の環境音があっても、音声は認識されますか？<span class="mk">＋</span></summary><div class="ans">声で入れるのはポケットと歯肉退縮量に絞っており、入った値は画面表示と効果音で確認できます。認識が違っていた場合は、そのまま言い直すか、テンキーから手入力で修正できます。出血・排膿・プラークなどはタップで入力するため、音声認識の影響を受けません。導入前のデモで、実際の診療環境に近い状態でお試しいただくことをおすすめしています。</div></details>
     <details class="faq"><summary><span class="qm">Q</span>今使っている検査の順番（流れ）のまま使えますか？<span class="mk">＋</span></summary><div class="ans">はい。まわる区画（上顎頬側・上顎口蓋側・下顎頬側・下顎舌側）の順番と、それぞれ右から進むか左から進むかを指定できます。設定した流れは図で確認でき、端まで入力すると自動で次の区画へ移ります。設定は担当者ごとに保存され、次回以降も引き継がれます。6点法・4点法・1点法にも対応しています。</div></details>
     <details class="faq"><summary><span class="qm">Q</span>インプラントの周囲も検査できますか？<span class="mk">＋</span></summary><div class="ans">はい。歯の状態で「インプラント」を独立して設定でき、検査表にも表示されます。欠損として扱う必要がないため、インプラント周囲の状態をメインテナンスのたびに記録として残せます。</div></details>
-    <details class="faq"><summary><span class="qm">Q</span>過去の検査と見比べることはできますか？<span class="mk">＋</span></summary><div class="ans">患者を開くと検査結果が縦に並び、スクロールで過去までたどれます。さらに「比較」から<b>任意の2回</b>を選ぶと、上下に並べて表示できます。比較にはポケット・出血・排膿を表示し、そのまま印刷してお渡しすることもできます。</div></details>
+    <details class="faq"><summary><span class="qm">Q</span>過去の検査と見比べることはできますか？<span class="mk">＋</span></summary><div class="ans">患者を開くと検査結果が縦に並び、スクロールで過去までたどれます。さらに「比較」から2回を選ぶと、上下に並べて比較できます。比較にはポケット・出血・排膿を表示し、そのまま印刷してお渡しすることもできます。</div></details>
     <details class="faq"><summary><span class="qm">Q</span>AIクレジットはどのくらい使いますか？<span class="mk">＋</span></summary><div class="ans">音声入力による検査1回（約5分）で80〜100クレジット程度が目安です。毎月1,000クレジットの無料枠が付与されるため、月10回程度の検査は無料枠内でお試しいただけます。使用量はAIクレジット画面の利用状況で確認できます。</div></details>
+    <details class="faq camp-only"><summary><span class="qm">Q</span>キャンペーン中は、何にお金がかかりますか？<span class="mk">＋</span></summary><div class="ans">書類生成機能の公開までは、基本利用料・プロービング検査・ストレージは無料です。お支払いいただくのは、音声入力などで使ったAIクレジットの実費だけです（毎月1,000クレジットの無料枠もあります）。キャンペーンを終了する場合は1か月前までにお知らせし、続けてご利用いただく場合に限り通常の料金がかかります。</div></details>
+    <details class="faq"><summary><span class="qm">Q</span>チャージしたAIクレジットは翌月に繰り越せますか？<span class="mk">＋</span></summary><div class="ans">はい。チャージしたクレジットは、チャージした日から12か月のあいだ繰り越してお使いいただけます。毎月付与される無料枠は、翌月には繰り越しません（無料枠から先に使われます）。</div></details>
     <details class="faq"><summary><span class="qm">Q</span>AIクレジットを使い切ると、検査できなくなりますか？<span class="mk">＋</span></summary><div class="ans">音声入力はご利用いただけなくなりますが、テンキーからの手入力での検査記録は継続してご利用いただけます。残高が少なくなった段階でメールにて通知いたします。</div></details>
     <details class="faq"><summary><span class="qm">Q</span>書類の作成や患者説明の機能はいつ使えますか？<span class="mk">＋</span></summary><div class="ans">書類生成・患者説明（コンサル）・患者用アプリは順次公開を予定しています。公開時期は本サイトのアップデート情報でお知らせします。いずれも現在の契約の中に追加されていく形です。</div></details>
     <details class="faq"><summary><span class="qm">Q</span>歯科衛生士が複数名います。アカウントは共用できますか？<span class="mk">＋</span></summary><div class="ans">検査の担当者を記録として残すため、歯科衛生士の方ごとにアカウントを作成いただくことを前提としています。アカウントの追加はサポートにて対応します。</div></details>
-    <details class="faq"><summary><span class="qm">Q</span>診断に使えるのでしょうか？<span class="mk">＋</span></summary><div class="ans">KOEMOは診断を行うためのものではなく、検査記録を支援するサービスです。診断および治療方針の決定は歯科医師の判断によって行われます。</div></details>
+    <details class="faq"><summary><span class="qm">Q</span>診断に使えるのでしょうか？<span class="mk">＋</span></summary><div class="ans">KOEMOは、検査結果の記録・集計・表示を支援するサービスで、医薬品医療機器等法上の医療機器（医療機器プログラム）ではありません。表示される集計値・深さの区分・改善／悪化のマークは、入力された値を一般的な基準や計算式で整理したもので、診断結果ではありません。診断および治療方針の決定は、歯科医師の判断によって行われます。</div></details>
     <div style="text-align:center;margin-top:26px"></div>
   </div>
 </section>
@@ -851,7 +874,7 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
 <footer>
   <div class="wrap">
     <div class="fgrid2">
-      <div><a href="#" class="logo">KOEMO<span class="dot">.</span></a><p class="fdesc">前回値から始まるプロービング検査。歯科衛生士のためのクラウドサービスです。検査から説明・書類・お渡しまで、順に広げていきます。</p></div>
+      <div><a href="#" class="logo">KOEMO</a><p class="fdesc">初回は声で、2回目からはタップで。歯科衛生士のためのプロービング検査のクラウドサービスです。検査から説明・書類・お渡しまで、順に広げていきます。</p></div>
       <div><h5>SERVICE</h5><ul><li><a href="#why">KOEMOで変わること</a></li><li><a href="#probing">入力のしかた</a></li><li><a href="#change">前回との変化</a></li><li><a href="#tooth">歯の状態</a></li><li><a href="#compare">検査の比較</a></li><li><a href="#settings">検査順・表示設定</a></li><li><a href="#roadmap">今後の機能</a></li><li class="soon-li">書類生成<small>SOON</small></li><li class="soon-li">患者説明<small>SOON</small></li><li class="soon-li">患者用アプリ<small>SOON</small></li></ul></div>
       <div><h5>SUPPORT</h5><ul><li><a href="#flow">導入の流れ</a></li><li><a href="#price">料金</a></li><li><a href="#faq">よくあるご質問</a></li><li><a href="updates.html">アップデート情報</a></li><li><a href="status.html">障害・メンテナンス情報</a></li></ul></div>
       <div><h5>COMPANY</h5><ul><li><a href="#contact">お問い合わせ</a></li><li><a href="company.html">運営会社</a></li><li><a href="terms.html">利用規約</a></li><li><a href="privacy.html">個人情報保護方針</a></li><li><a href="tokushoho.html">特定商取引法に基づく表記</a></li></ul></div>
