@@ -1,0 +1,7 @@
+# XServer 用。公開前は検索エンジンに登録しない（NOINDEX=True のときに生成）
+<IfModule mod_headers.c>
+  Header set X-Robots-Tag "noindex, nofollow"
+</IfModule>
+DirectoryIndex index.html
+# 開発用のフォルダは公開しない
+RedirectMatch 404 /(_tools|_改訂履歴|_pages)(/|$)
