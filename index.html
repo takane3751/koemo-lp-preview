@@ -733,22 +733,32 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
 
 <!-- ============ PRICE ============ -->
 <section id="price">
+  <!-- EDITION: probing（プロービング版の料金）。完全版では「ベース＋プラグインごとの月額」に書き直す（サービスサイト/README.md §2）
+       金額は _tools/build_pages.py の PRICES で管理（data-price の中身はスクリプトが入れる） -->
   <div class="wrap">
     <div class="sechead">
       <span class="en">PRICE</span>
       <h2>料金</h2>
-      <p>月額の基本利用料に、ご利用人数分のユーザー料金を加えたかたちです。音声入力などAIの利用料は、使った分だけをチャージ式でお支払いいただきます。</p>
+      <p>基本利用料とプロービング検査の利用料は、月額の定額です。スタッフの人数による追加料金はありません。音声入力などAIの利用料だけ、使った分をチャージ式でお支払いいただきます。</p>
     </div>
-    <div class="draft">◆ 金額は仮置きです。確定後に差し替えてください（ベータ期間中は基本利用料無料・AIクレジット無料枠 月1,000）</div>
+    <div class="draft" data-price-draft>◆ 金額は未確定です（_tools/build_pages.py の PRICES に入れて再生成すると反映されます）</div>
     <div class="psum">
       <div class="pcard">
         <div class="ptitle">基本利用料</div>
-        <div class="pdesc">院長（オーナー）＋スタッフ1名分を含みます</div>
-        <div class="price">¥○,○○○<small>／月</small></div>
+        <div class="pdesc">患者の管理とスタッフの登録</div>
+        <div class="price"><span data-price="base">¥○,○○○</span><small>／月</small></div>
         <div class="pnote">税込・初期費用なし</div>
-        <ul><li>プロービング検査（タップ入力・音声入力）</li><li>検査結果の保存・PDF出力</li><li>担当者ごとの検査設定</li><li>今後公開する機能も同じ契約内で追加</li></ul>
+        <ul><li>患者の検索・患者詳細（検査の履歴）</li><li>検査結果の保存・比較・PDF出力</li><li>スタッフは人数に関係なく登録できます</li><li>今後の機能はプラグインとして追加</li></ul>
       </div>
       <div class="pcard hi">
+        <span class="badge">定額</span>
+        <div class="ptitle">プロービング検査</div>
+        <div class="pdesc">検査の入力・集計・前回との比較</div>
+        <div class="price"><span data-price="probing">¥○,○○○</span><small>／月</small></div>
+        <div class="pnote">税込・人数による追加料金なし</div>
+        <ul><li>タップ入力と音声入力（ポケット・歯肉退縮量）</li><li>前回の記録から始まる入力・改善／悪化の表示</li><li>担当者ごとの検査順・表示設定</li><li>歯の状態（欠損・乳歯・インプラント）</li></ul>
+      </div>
+      <div class="pcard">
         <span class="badge">従量</span>
         <div class="ptitle">AIクレジット</div>
         <div class="pdesc">音声入力などAIの処理で消費します</div>
@@ -756,20 +766,14 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
         <div class="pnote">1クレジット＝1円相当・毎月無料枠あり</div>
         <ul><li>チャージ式（前払い）・1,000／3,000／5,000／10,000から選択</li><li>毎月1,000クレジットの無料枠</li><li>残高500クレジット未満でメール通知</li><li>利用状況の履歴を画面で確認</li></ul>
       </div>
-      <div class="pcard">
-        <div class="ptitle">追加ユーザー</div>
-        <div class="pdesc">歯科衛生士の方の人数分を追加できます</div>
-        <div class="price">¥○○○<small>／1名・月</small></div>
-        <div class="pnote">検査担当者の記録に使用します</div>
-        <ul><li>検査者としてPDFに記録</li><li>スタッフごとのログインID・パスワード</li><li>権限はオーナー／スタッフの2種</li></ul>
-      </div>
     </div>
     <table class="ptable">
-      <thead><tr><th>項目</th><th>内容</th><th style="text-align:right">料金（仮）</th></tr></thead>
+      <thead><tr><th>項目</th><th>内容</th><th style="text-align:right">料金</th></tr></thead>
       <tbody>
         <tr><td>初期費用</td><td>アカウント開設・初期設定</td><td class="r">無料</td></tr>
-        <tr><td>基本利用料</td><td>オーナー＋スタッフ1名を含む</td><td class="r">¥○,○○○／月</td></tr>
-        <tr><td>追加ユーザー</td><td>1名につき</td><td class="r">¥○○○／月</td></tr>
+        <tr><td>基本利用料</td><td>患者の管理・スタッフの登録・検査結果の保存と出力</td><td class="r"><span data-price="base">¥○,○○○</span>／月</td></tr>
+        <tr><td>プロービング検査</td><td>検査の入力・集計・比較・担当者ごとの設定</td><td class="r"><span data-price="probing">¥○,○○○</span>／月</td></tr>
+        <tr><td>スタッフの追加</td><td>人数に関係なく登録できます</td><td class="r">追加料金なし</td></tr>
         <tr><td>AIクレジット</td><td>1,000／3,000／5,000／10,000クレジットから選択</td><td class="r">1クレジット＝¥1</td></tr>
         <tr><td>月次無料クレジット</td><td>全医院一律・毎月付与（繰り越しなし）</td><td class="r">1,000クレジット</td></tr>
       </tbody>
@@ -777,8 +781,8 @@ footer ul .soon-li{color:var(--hint)}footer ul .soon-li small{font-size:9.5px;bo
     <ul class="pnotes">
       <li>表示価格はすべて税込です。</li>
       <li>AIクレジットは、実行した機能で使用した処理量に応じて消費されます。音声入力による検査1回（約5分）で80〜100クレジット程度が目安です。</li>
-      <li>AIクレジットには有効期限があります。詳細は利用規約をご確認ください。</li>
-      <li>今後公開予定の機能（書類生成・患者説明・患者用アプリ）の料金は、公開時にお知らせします。</li>
+      <li>チャージしたAIクレジットの有効期限は、チャージした日から12か月です。詳しくは<a href="terms.html">利用規約</a>をご確認ください。</li>
+      <li>今後公開予定の機能（書類生成・患者説明・患者用アプリ）は、プラグインとして追加できるようにする予定です。料金は公開時にお知らせします。</li>
     </ul>
   </div>
 </section>
